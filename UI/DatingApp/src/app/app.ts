@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MembersService } from './services/members-service';
 
 @Component({
   selector: 'da-root',
@@ -7,6 +8,12 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('DatingApp');
+export class App implements OnInit {
+  membersService : MembersService = inject(MembersService);
+
+  ngOnInit(): void {
+    this.membersService.getMembers()
+      .subscribe()
+  }
+
 }
