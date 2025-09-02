@@ -1,19 +1,34 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MembersService } from './services/members-service';
+import { Member } from './models/member';
+import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'da-root',
-  imports: [RouterOutlet],
+  imports: [
+    RouterOutlet, 
+    CommonModule,
+    MatTableModule
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App implements OnInit {
-  membersService : MembersService = inject(MembersService);
+  membersService : MembersService = inject(MembersService);  
+  members = signal<Member[]>([]);
+  destroyRef = inject(DestroyRef)
+
+  columnsToDisplay = ['id', 'displayName', 'email'];
 
   ngOnInit(): void {
     this.membersService.getMembers()
-      .subscribe()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(resp => this.members.set(resp))
   }
 
 }
