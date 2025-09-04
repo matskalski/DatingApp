@@ -3,3 +3,12 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.color-white{
+    color: white;
+}
+
+mat-form-field.small {
+    --mat-form-field-container-height: 30px;
+    --mat-form-field-container-vertical-padding: 8px;
+  }

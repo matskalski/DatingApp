@@ -5,13 +5,15 @@ import { Member } from './models/member';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {MatTableModule} from '@angular/material/table';
+import { Nav } from './components/nav/nav';
 
 @Component({
   selector: 'da-root',
   imports: [
     RouterOutlet, 
     CommonModule,
-    MatTableModule
+    MatTableModule,
+    Nav
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'

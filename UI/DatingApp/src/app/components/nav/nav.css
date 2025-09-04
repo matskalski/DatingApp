@@ -1,0 +1,8 @@
+@use '@angular/material' as mat;
+
+mat-form-field {
+    @include mat.form-field-overrides((
+        container-height: 1em,
+        container-vertical-padding: .25em,
+    ));
+}

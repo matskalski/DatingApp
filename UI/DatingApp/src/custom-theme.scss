@@ -17,6 +17,14 @@ html {
   ));
 }
 
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.toolbar-overrides((
+    container-background-color: transparent
+  ));
+}
+
+
 body {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
