@@ -4,7 +4,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'da-nav',
@@ -23,12 +23,17 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 export class Nav {
   protected creds: any = {}
 
-  //private fb = inject(FormBuilder);
-  constructor(private fb: FormBuilder) { }
+  private fb = inject(FormBuilder);
+ //constructor(private fb: FormBuilder) { }
 
   form: FormGroup = this.fb.group({
-    email: ['', []],
-    password: ['', []]
+    email: ['', [
+      Validators.required,
+      Validators.email
+    ]],
+    password: ['', [
+      Validators.required
+    ]]
   })
 
   login(){

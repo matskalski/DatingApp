@@ -14,13 +14,13 @@
                 <a>Messages</a>
             </nav>
             <div class="flex align-middle ml-auto gap-3 h-full">
-                <form (formGroup)="form" class="flex items-center align-middle gap-3">
+                <form [formGroup]="form" class="flex items-center align-middle gap-3">
                     <mat-form-field class="small" subscriptSizing="dynamic">
                         <input type="email" matInput placeholder="email" formControlName="email">
                     </mat-form-field>
-                    <!-- <mat-form-field class="small" subscriptSizing="dynamic">
+                    <mat-form-field class="small" subscriptSizing="dynamic">
                         <input type="password" matInput placeholder="password" formControlName="password">
-                    </mat-form-field> -->
+                    </mat-form-field>
                     <button matButton="outlined" class="!text-white !border-white">Login</button>
                 </form>
             </div>
