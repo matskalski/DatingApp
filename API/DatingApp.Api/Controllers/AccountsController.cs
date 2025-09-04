@@ -3,6 +3,7 @@ using System.Text;
 using DatingApp.Api.Data;
 using DatingApp.Api.DTOs;
 using DatingApp.Api.Entities;
+using DatingApp.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,14 +14,16 @@ namespace DatingApp.Api.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ITokensService _tokensService;
 
-        public AccountsController(AppDbContext context)
+        public AccountsController(AppDbContext context, ITokensService tokensService)
         {
             _context = context;
+            _tokensService = tokensService;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AppUser>> Register([FromBody] RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> Register([FromBody] RegisterDto registerDto)
         {
             if (await EmailExists(registerDto.Email)) 
             {
@@ -39,12 +42,22 @@ namespace DatingApp.Api.Controllers
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
 
-                return Ok(user);
-            };
+
+                var userDto = new UserDto
+                {
+                    Id = user.Id,
+                    DisplayName = user.DisplayName,
+                    Email = user.Email,
+                    Token = _tokensService.CreateToken(user)
+                };
+
+                return Ok(userDto);
+            }
+            ;
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login([FromBody] LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(usr => usr.Email.Equals(loginDto.Email));
 
@@ -65,7 +78,15 @@ namespace DatingApp.Api.Controllers
                     }
                 }
 
-                return Ok(user);
+                var userDto = new UserDto
+                {
+                    Id = user.Id,
+                    DisplayName = user.DisplayName,
+                    Email = user.Email,
+                    Token = _tokensService.CreateToken(user)
+                };
+
+                return Ok(userDto);
             }
         }
 
