@@ -22,6 +22,7 @@ builder.Services.AddCors(setup =>
         pol.WithOrigins("http://localhost:4200", "https://localhost:4200")
             .AllowAnyMethod()
             .WithHeaders("Content-Type")
+            //.AllowAnyHeader()
         );
 });
 
