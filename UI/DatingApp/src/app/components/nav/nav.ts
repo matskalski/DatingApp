@@ -12,5 +12,5 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   styleUrl: './nav.css'
 })
 export class Nav {
-
+  protected creds: any = {}
 }
