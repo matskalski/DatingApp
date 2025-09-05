@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MembersService } from './services/members-service';
+import { MembersService } from './services/members/members-service';
 import { Member } from './models/member';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

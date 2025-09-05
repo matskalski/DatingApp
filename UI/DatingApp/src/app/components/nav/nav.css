@@ -1,8 +1,5 @@
-@use '@angular/material' as mat;
-
-mat-form-field {
-    @include mat.form-field-overrides((
-        container-height: 1em,
-        container-vertical-padding: .25em,
-    ));
-}
+.photo {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }

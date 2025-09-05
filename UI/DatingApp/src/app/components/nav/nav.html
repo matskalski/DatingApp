@@ -14,15 +14,30 @@
                 <a>Messages</a>
             </nav>
             <div class="flex align-middle ml-auto gap-3 h-full">
-                <form [formGroup]="form" class="flex items-center align-middle gap-3">
+                @if (loggedIn()){
+                <span class="flex gap-3 items-center">
+                    <img src="https://material.angular.dev/assets/img/examples/shiba1.jpg" class="photo" alt="">
+                    <button matButton matButton="outlined" class="!text-white !border-white"
+                        [matMenuTriggerFor]="menu">Menu</button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>Edit profile</button>
+                        <button mat-menu-item (click)="logout()">Logout</button>
+                    </mat-menu>
+                </span>
+                }
+                @else{
+                <form [formGroup]="form" class="flex items-center align-middle gap-3" (ngSubmit)="login()">
                     <mat-form-field class="small" subscriptSizing="dynamic">
                         <input type="email" matInput placeholder="email" formControlName="email">
+                        <mat-error>Please enter a valid email address</mat-error>
                     </mat-form-field>
                     <mat-form-field class="small" subscriptSizing="dynamic">
                         <input type="password" matInput placeholder="password" formControlName="password">
+                        <mat-error>Please enter a valid password</mat-error>
                     </mat-form-field>
-                    <button matButton="outlined" class="!text-white !border-white">Login</button>
+                    <button type="submit" matButton="outlined" class="!text-white !border-white">Login</button>
                 </form>
+                }
             </div>
         </div>
     </mat-toolbar>

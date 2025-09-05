@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Member } from '../models/member';
+import { Member } from '../../models/member';
 import { Observable } from 'rxjs';
 
 @Injectable({
