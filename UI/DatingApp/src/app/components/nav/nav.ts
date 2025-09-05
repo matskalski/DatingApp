@@ -30,10 +30,8 @@ import { MatMenuModule } from '@angular/material/menu';
   styleUrl: './nav.css'
 })
 export class Nav {
-  protected loggedIn = signal(false);
-
   private fb = inject(FormBuilder);
-  private accountService = inject(AccountsService);
+  protected accountService = inject(AccountsService);
   private destroyRef = inject(DestroyRef);
 
   form: FormGroup = this.fb.group({
@@ -57,13 +55,11 @@ export class Nav {
         .pipe(
           takeUntilDestroyed(this.destroyRef)
         )
-        .subscribe(resp => {
-          this.loggedIn.set(true);
-        });
+        .subscribe();
     }
   }
 
   logout() {
-    this.loggedIn.set(false);
+    this.accountService.logout()
   }
 }
