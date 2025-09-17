@@ -12,3 +12,9 @@ mat-form-field.small {
     --mat-form-field-container-height: 30px;
     --mat-form-field-container-vertical-padding: 8px;
   }
+
+  @layer components {
+    .center-hor-ver {
+      @apply absolute -translate-1/2 top-1/2 left-1/2;
+    }
+  }
