@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Member } from '../../models/member';
+import { MemberModel } from '../../models/member-model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class MembersService {
   httpClient: HttpClient = inject(HttpClient)
 
-  getMembers() : Observable<Member[]> {
-    return this.httpClient.get<Member[]>("https://localhost:7144/api/members")
+  getMembers() : Observable<MemberModel[]> {
+    return this.httpClient.get<MemberModel[]>("https://localhost:7144/api/members")
   }
 }

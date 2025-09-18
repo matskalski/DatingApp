@@ -6,11 +6,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AccountsService } from '../../services/accounts/accounts-service';
-import { Login } from '../../models/login';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
+import { LoginModel } from '../../models/login-model';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'da-nav',
@@ -24,7 +26,9 @@ import { MatMenuModule } from '@angular/material/menu';
     ReactiveFormsModule,
     MatSelectModule,
     CommonModule,
-    MatMenuModule
+    MatMenuModule,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './nav.html',
   styleUrl: './nav.css'
@@ -32,6 +36,7 @@ import { MatMenuModule } from '@angular/material/menu';
 export class Nav {
   private fb = inject(FormBuilder);
   protected accountService = inject(AccountsService);
+  private router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
   form: FormGroup = this.fb.group({
@@ -46,14 +51,15 @@ export class Nav {
 
   login() {
     if (this.form.valid) {
-      const loginModel: Login = {
+      const loginModel: LoginModel = {
         email: this.form.controls['email'].value,
         password: this.form.controls['password'].value
       }
 
       this.accountService.login(loginModel)
         .pipe(
-          takeUntilDestroyed(this.destroyRef)
+          takeUntilDestroyed(this.destroyRef),
+          tap(() => this.router.navigateByUrl('/members'))
         )
         .subscribe();
     }
@@ -61,5 +67,6 @@ export class Nav {
 
   logout() {
     this.accountService.logout()
+    this.router.navigateByUrl('/')
   }
 }

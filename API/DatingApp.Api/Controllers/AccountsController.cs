@@ -42,7 +42,6 @@ namespace DatingApp.Api.Controllers
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
 
-
                 var userDto = new UserDto
                 {
                     Id = user.Id,
