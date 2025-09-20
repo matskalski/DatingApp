@@ -19,8 +19,12 @@ export class Snackbar implements OnInit, OnDestroy {
   private snackBarRef = inject(MatSnackBarRef<Snackbar>)
 
   value: WritableSignal<number> = signal<number>(100)
-  private interval: number | undefined = undefined
-  private updateIntervalMs: number = 150;
+  private interval: number | undefined = undefined;
+
+  //zalecane nie więcej niż 100, aby animacja progress bara była płynna
+  //i nie mniej niż 50, ponieważ animacja nastapuje z opóźnieniem - 
+  //przy mniejszych wartościach snackbar zamyka się zanim progressbar zmaleje do końca
+  private updateIntervalMs: number = 75;
 
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: SnackbarData) { }
 

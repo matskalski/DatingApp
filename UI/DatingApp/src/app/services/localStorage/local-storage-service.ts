@@ -13,7 +13,6 @@ export class LocalStorageService {
   }
 
   removeItem(key: string): void {
-    console.log('rem', key)
     localStorage.removeItem(key)
   }
 }
