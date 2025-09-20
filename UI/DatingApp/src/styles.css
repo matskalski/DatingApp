@@ -1,20 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
 
-.color-white{
-    color: white;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.color-white {
+  color: white;
 }
 
 mat-form-field.small {
-    --mat-form-field-container-height: 30px;
-    --mat-form-field-container-vertical-padding: 8px;
-  }
+  --mat-form-field-container-height: 30px;
+  --mat-form-field-container-vertical-padding: 8px;
+}
 
-  @layer components {
-    .center-hor-ver {
-      @apply absolute -translate-1/2 top-1/2 left-1/2;
-    }
+@layer components {
+  .center-hor-ver {
+    @apply absolute -translate-1/2 top-1/2 left-1/2;
   }
+}
+
+/* stylowanie dla snackbarów */
+.mdc-snackbar__surface {
+  color: white;
+}
+
+.info-snackbar .mdc-snackbar__surface {
+  background-color: #3f60bb !important;
+}
+
+.success-snackbar .mdc-snackbar__surface {
+  background-color: #4CAF50 !important;
+}
+
+.warning-snackbar .mdc-snackbar__surface {
+  background-color: #d38826 !important;
+}
+
+.error-snackbar .mdc-snackbar__surface {
+  background-color: #a71515 !important;
+}

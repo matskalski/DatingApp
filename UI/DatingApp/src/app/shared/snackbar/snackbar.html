@@ -1,0 +1,10 @@
+<span class="flex flex-row items-center justify-between gap-3">
+    <mat-icon fontIcon={{data.icon}}></mat-icon>
+    <div class="max-w-md max-h-24 wrap-break-word">
+        {{data.message}}
+    </div>
+    <button matIconButton (click)="close()">
+        <mat-icon class="text-white!">close</mat-icon>
+    </button>
+</span>
+<mat-progress-bar class="text-white!" mode="determinate" value={{value()}}></mat-progress-bar>

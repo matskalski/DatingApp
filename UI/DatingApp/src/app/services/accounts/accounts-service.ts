@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { LoginModel } from '../../models/login-model';
 import { UserModel } from '../../models/user-model';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { LocalStorageService } from '../localStorage/local-storage-service';
 import { RegisterModel } from '../../models/register-model';
+import { of } from 'rxjs';
+import { SnackbarService } from '../toast/snackbar-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,7 @@ export class AccountsService {
   currentUser = signal<UserModel | null>(null)
 
   private http = inject(HttpClient);
+  private snackbarService = inject(SnackbarService)
   private localStorageService = inject(LocalStorageService);
   private baseUrl = 'https://localhost:7144/api/';
 
@@ -23,6 +26,10 @@ export class AccountsService {
           if (user) {
             this.setCurrentUser(user);
           }
+        }),
+        catchError(error => {
+          this.snackbarService.error("Logowanie nie powiodło się")
+          return of(null)
         })
       )
   }

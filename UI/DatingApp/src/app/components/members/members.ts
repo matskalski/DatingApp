@@ -1,16 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { ToastService } from '../../services/toast/toast-service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'da-members',
-  imports: [],
+  imports: [MatIconModule],
   templateUrl: './members.html',
   styleUrl: './members.css'
 })
 export class Members {
-  private toastService = inject(ToastService);
-  
-  show(){
-    this.toastService.openSnackBar("test", "action")
-  }
 }

@@ -4,7 +4,7 @@ import { MembersService } from './services/members/members-service';
 import { MemberModel } from './models/member-model';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
-import { Nav } from './components/nav/nav';
+import { Nav } from './shared/nav/nav';
 import { LocalStorageService } from './services/localStorage/local-storage-service';
 import { AccountsService } from './services/accounts/accounts-service';
 
