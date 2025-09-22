@@ -1,10 +1,11 @@
-using System.Text;
 using DatingApp.Api.Data;
+using DatingApp.Api.Middlewares;
 using DatingApp.Api.Services;
 using DatingApp.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,9 @@ builder.Services.AddCors(setup =>
 });
 
 builder.Services.AddScoped<ITokensService, TokensService>();
+
+builder.Services.AddScoped<ExceptionMiddleware>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
@@ -45,7 +49,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
