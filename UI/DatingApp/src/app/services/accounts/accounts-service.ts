@@ -6,7 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { LocalStorageService } from '../localStorage/local-storage-service';
 import { RegisterModel } from '../../models/register-model';
 import { of } from 'rxjs';
-import { SnackbarService } from '../toast/snackbar-service';
+import { SnackbarService } from '../snackbar/snackbar-service';
 
 @Injectable({
   providedIn: 'root'
