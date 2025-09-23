@@ -8,14 +8,13 @@ import { Lists } from './components/lists/lists';
 import { authGuard } from './guards/auth-guard';
 import { TestErrors } from './components/test-errors/test-errors';
 import { NotFound } from './shared/errors/not-found/not-found';
+import { ServerError } from './shared/errors/server-error/server-error';
 
 
 export const routes: Routes = [
 
   //lista routingów dostępnych wyłącznie po zalogowaniu
   //dodana aby nie dodawać za każdym razem tego samego guardu (authGuard)
-  //ponieważ ścieżka zbiorczego rootingu to '' trzeba wcześniej jawnie wskazać przekierowanie
-  //ze ściezki '' na komponent Home - pomimo że path pod ściezką ** obsłuży ten przypadek
   {
     path: '',
     component: Home
@@ -45,11 +44,11 @@ export const routes: Routes = [
     component: TestErrors
   },
   {
-    path: 'not-found',
-    component: NotFound
+    path: 'server-error',
+    component: ServerError
   },
   {
     path: '**',
-    component: Home
+    component: NotFound
   }
 ];

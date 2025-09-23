@@ -1,13 +1,14 @@
 <div class="flex justify-center mt-10">
-  <mat-card class="max-w-md" appearance="outlined">
-  <mat-card-header class="flex justify-center">
-    <mat-card-title>Not Found</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="flex justify-center">
-    <h2>Sorry, page you are looking for cannot be found</h2>
-  </mat-card-content>
-  <mat-card-actions class="flex justify-center">
-    <button matButton>Go back</button>
-  </mat-card-actions>
-</mat-card>
+  <mat-card class="w-xl" appearance="outlined">
+    <mat-card-header class="flex justify-center">
+      <mat-card-title class="text-3xl! font-semibold!">Not Found</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="flex! flex-col items-center py-8!">
+      <mat-icon class="icon-big text-blue-700!">search</mat-icon>
+      <p class="text-xl font-medium">Sorry, page you are looking for cannot be found</p>
+    </mat-card-content>
+    <mat-card-actions class="flex justify-center">
+      <button matButton="outlined" (click)="goBack()">Go back</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

@@ -1,0 +1,17 @@
+<div class="flex justify-center mt-10">
+  <mat-card class="w-xl" appearance="outlined">
+    <mat-card-header class="flex justify-center">
+      <mat-card-title class="text-3xl! font-semibold!">Server error</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="flex! flex-col items-center py-8!">
+      <mat-icon class="icon-big text-red-700!">error</mat-icon>
+      <p class="text-xl font-medium">{{error.message}}</p>
+    </mat-card-content>
+    <mat-card-actions class="flex justify-center">
+      <button matButton="outlined" (click)="detailsToggle()">Show details</button>
+    </mat-card-actions>
+    @if(showDetails){
+      <p>{{error.details}}</p>
+    }
+  </mat-card>
+</div>

@@ -1,4 +1,5 @@
 ﻿using DatingApp.Api.DTOs;
+using DatingApp.Api.Exceptions;
 using System.Text.Json;
 
 namespace DatingApp.Api.Middlewares
@@ -13,6 +14,15 @@ namespace DatingApp.Api.Middlewares
             }
             catch (Exception e)
             {
+                if (e is BaseException && ((BaseException)e).StatusCode.HasValue)
+                {
+                    context.Response.StatusCode = (int)(e as BaseException).StatusCode.Value;
+                }
+                else
+                {
+                    context.Response.StatusCode = 500;
+                }
+
                 var exception = new ExceptionDto
                 {
                     StatusCode = context.Response.StatusCode,

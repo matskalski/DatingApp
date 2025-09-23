@@ -1,14 +1,19 @@
 import { SnackbarService } from './../services/snackbar/snackbar-service';
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError } from 'rxjs';
+import { NavigationExtras, Router } from '@angular/router';
+import { catchError, tap } from 'rxjs';
 
 export const errorsInterceptor: HttpInterceptorFn = (req, next) => {
   const snackbarService = inject(SnackbarService);
+  const router = inject(Router);
 
   return next(req)
     .pipe(
+      tap(() => console.log("interceptor")),
       catchError(err => {
+        console.log('error cached', err.status)
+
         if (err) {
           switch (err.status) {
             case 400:
@@ -31,10 +36,12 @@ export const errorsInterceptor: HttpInterceptorFn = (req, next) => {
               snackbarService.error("401");
               break
             case 404:
-              snackbarService.error("404")
+              router.navigateByUrl('/not-found')
               break
             case 500:
-              snackbarService.error("500")
+              console.log('server error')
+              const navigationExtras: NavigationExtras = {state: {error: err.error}}
+              router.navigateByUrl('/server-error', navigationExtras)
               break
             default:
               break

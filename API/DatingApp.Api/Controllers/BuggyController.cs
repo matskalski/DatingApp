@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DatingApp.Api.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.Api.Controllers
 {
@@ -21,7 +22,7 @@ namespace DatingApp.Api.Controllers
         [HttpGet("server-error")]
         public IActionResult GetServerError()
         {
-            throw new Exception("This is a server error");
+            throw new ServerErrorException();
         }
 
         [HttpGet("bad-request")]
