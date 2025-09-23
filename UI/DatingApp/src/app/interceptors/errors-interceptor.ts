@@ -10,10 +10,7 @@ export const errorsInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req)
     .pipe(
-      tap(() => console.log("interceptor")),
       catchError(err => {
-        console.log('error cached', err.status)
-
         if (err) {
           switch (err.status) {
             case 400:
@@ -29,8 +26,6 @@ export const errorsInterceptor: HttpInterceptorFn = (req, next) => {
               else {
                 snackbarService.error(err.error, err.status)
               }
-
-              //snackbarService.error("400");
               break
             case 401:
               snackbarService.error("401");

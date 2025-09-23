@@ -1,9 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiError } from '../../../models/api-error-model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
+import { DetailsDialog } from './details-dialog/details-dialog';
 
 @Component({
   selector: 'da-server-error',
@@ -16,8 +18,8 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './server-error.css'
 })
 export class ServerError {
+  readonly dialog = inject(MatDialog);
   protected error: ApiError;
-  protected showDetails = false;
   private router = inject(Router);
 
   constructor() {
@@ -25,7 +27,9 @@ export class ServerError {
     this.error = navigation?.extras?.state?.['error'];
   }
 
-  detailsToggle(){
-    this.showDetails = !this.showDetails
+  openDetailsDialog() {
+    const dialogRef = this.dialog.open(DetailsDialog, {
+      data: this.error.details,
+    });
   }
 }

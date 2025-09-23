@@ -7,11 +7,10 @@
       <mat-icon class="icon-big text-red-700!">error</mat-icon>
       <p class="text-xl font-medium">{{error.message}}</p>
     </mat-card-content>
+    @if(error.details){
     <mat-card-actions class="flex justify-center">
-      <button matButton="outlined" (click)="detailsToggle()">Show details</button>
+      <button matButton="outlined" (click)="openDetailsDialog()">Show details</button>
     </mat-card-actions>
-    @if(showDetails){
-      <p>{{error.details}}</p>
     }
   </mat-card>
 </div>
