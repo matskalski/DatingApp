@@ -27,7 +27,9 @@ namespace DatingApp.Api.Repositories
 
         public Task<IReadOnlyList<Member>> GetMembers()
         {
-            return _context.Members.ToListAsync().ContinueWith(x => x.Result as IReadOnlyList<Member>);
+            return _context.Members
+                .ToListAsync()
+                .ContinueWith(x => x.Result as IReadOnlyList<Member>);
         }
 
         public Task<IReadOnlyList<Photo>> GetPhotosForMember(string memberId)
