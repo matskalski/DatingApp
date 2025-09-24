@@ -1,4 +1,6 @@
-﻿namespace DatingApp.Api.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DatingApp.Api.Entities
 {
     public class Member
     {
@@ -13,6 +15,10 @@
         public required string City { get; set; }
         public required string Country { get; set; }
 
+
+        public List<Photo> Photos { get; set; } = [];
+
+        [ForeignKey(nameof(Id))]
         public AppUser User { get; set; } = null!;
     }
 }

@@ -1,5 +1,7 @@
 using DatingApp.Api.Data;
 using DatingApp.Api.Middlewares;
+using DatingApp.Api.Repositories;
+using DatingApp.Api.Repositories.Interfaces;
 using DatingApp.Api.Services;
 using DatingApp.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -28,6 +30,7 @@ builder.Services.AddCors(setup =>
 });
 
 builder.Services.AddScoped<ITokensService, TokensService>();
+builder.Services.AddScoped<IMembersRepository, MembersRepository>();
 
 builder.Services.AddScoped<ExceptionMiddleware>();
 
@@ -64,5 +67,23 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//to powinien byæ hosted service na starcie aplikacji
+using(var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        await context.Database.MigrateAsync();
+
+        await Seed.SeedData(context);
+    }
+    catch (Exception)
+    {
+        Console.Error.WriteLine("Error during migration");
+    }
+}
 
 app.Run();
