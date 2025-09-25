@@ -24,7 +24,7 @@ builder.Services.AddCors(setup =>
     setup.AddDefaultPolicy(pol =>
         pol.WithOrigins("http://localhost:4200", "https://localhost:4200")
             .AllowAnyMethod()
-            .WithHeaders("Content-Type")
+            .WithHeaders(["Content-Type", "Authorization"])
             //.AllowAnyHeader()
         );
 });

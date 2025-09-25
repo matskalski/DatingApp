@@ -19,7 +19,7 @@
             <div class="flex align-middle ml-auto gap-3 h-full">
                 @if (accountService.currentUser()){
                 <span class="flex gap-3 items-center">
-                    <img src="https://material.angular.dev/assets/img/examples/shiba1.jpg" class="photo" alt="">
+                    <img [src]="accountService.currentUser()?.imageUrl" class="photo" alt="">
                     <button matButton matButton="outlined" class="!text-white !border-white"
                         [matMenuTriggerFor]="menu">Menu</button>
                     <mat-menu #menu="matMenu">

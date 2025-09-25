@@ -82,7 +82,8 @@ namespace DatingApp.Api.Controllers
                     Id = user.Id,
                     DisplayName = user.DisplayName,
                     Email = user.Email,
-                    Token = _tokensService.CreateToken(user)
+                    Token = _tokensService.CreateToken(user),
+                    ImageUrl = user.ImageUrl
                 };
 
                 return Ok(userDto);

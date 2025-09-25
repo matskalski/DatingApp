@@ -3,5 +3,5 @@ export interface UserModel {
     displayName: string,
     email: string,
     token: string,
-    imegeUrl?: string
+    imageUrl?: string
 }

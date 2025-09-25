@@ -7,6 +7,7 @@ import { LocalStorageService } from '../localStorage/local-storage-service';
 import { RegisterModel } from '../../models/register-model';
 import { of } from 'rxjs';
 import { SnackbarService } from '../snackbar/snackbar-service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AccountsService {
   private http = inject(HttpClient);
   private snackbarService = inject(SnackbarService)
   private localStorageService = inject(LocalStorageService);
-  private baseUrl = 'https://localhost:7144/api/';
+  private baseUrl = environment.apiUrl;
 
   login(loginModel: LoginModel) {
     return this.http.post<UserModel>(this.baseUrl + 'accounts/login', loginModel)
