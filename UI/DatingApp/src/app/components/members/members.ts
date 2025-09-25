@@ -21,7 +21,7 @@ import { LocalStorageService } from '../../services/localStorage/local-storage-s
     MatInputModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule, MatIconModule
   ],
   templateUrl: './members.html',
   styleUrl: './members.css'
@@ -43,9 +43,7 @@ export class Members {
 
   constructor() {
     const ps = this.localStorege.getItem('page-size')
-    console.log('ps', ps);
     ps !== null ? this.pageSize = +ps : 5
-    console.log('ps', this.pageSize);
 
     this.membersService.getMembers()
       .pipe(
@@ -103,6 +101,7 @@ export class Members {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
@@ -110,7 +109,12 @@ export class Members {
     }
   }
 
-  onPageSizeChanged(value: PageEvent){
-    this.localStorege.setItem('page-size', value.pageSize)
+  onPageSizeChanged(event: PageEvent){
+    console.log(event.pageSize)
+    this.localStorege.setItem('page-size', event.pageSize)
+  }
+
+  test(){
+    console.log("zmiana")
   }
 }

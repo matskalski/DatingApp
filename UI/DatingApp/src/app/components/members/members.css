@@ -11,3 +11,10 @@
   margin-bottom: 5px;
   border-radius: 50%;
 }
+
+.mat-footer-row,
+.mat-header-row,
+.mat-row {
+    display: inline-flex !important;
+    min-width: 100% !important;
+}
