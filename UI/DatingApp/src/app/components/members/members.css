@@ -3,3 +3,11 @@
   width: 40px;
   border-radius: 50%;
 }
+
+.photo:hover{
+  height: 100px;
+  width: 100px;
+  margin: 5px;
+  margin-bottom: 5px;
+  border-radius: 50%;
+}

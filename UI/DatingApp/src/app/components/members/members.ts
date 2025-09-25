@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject, ViewChild } from '@angular/core';
+import { AccountsService } from './../../services/accounts/accounts-service';
+import { ChangeDetectorRef, Component, DestroyRef, inject, ViewChild, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MembersService } from '../../services/members/members-service';
 import { MemberModel } from '../../models/member-model';
@@ -6,8 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { LocalStorageService } from '../../services/localStorage/local-storage-service';
 
 
 @Component({
@@ -26,20 +29,29 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class Members {
   protected dataSource: MatTableDataSource<MemberModel> = new MatTableDataSource<MemberModel>([]);
   @ViewChild(MatPaginator)
-  paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
+  protected paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort)
-  sort: MatSort = new MatSort();
+  protected sort: MatSort = new MatSort();
 
   protected displayedColumns: string[] = ['image', 'displayName', 'dateOfBirth', 'gender', 'city', 'country'];
+  protected pageSize!: number;
 
   private membersService = inject(MembersService);
   private destroyRef = inject(DestroyRef);
-
+  private accountsService = inject(AccountsService);
+  private localStorege = inject(LocalStorageService)
 
   constructor() {
+    const ps = this.localStorege.getItem('page-size')
+    console.log('ps', ps);
+    ps !== null ? this.pageSize = +ps : 5
+    console.log('ps', this.pageSize);
+
     this.membersService.getMembers()
       .pipe(
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
+        //nie wyświetlaj na liście użytkownika który aktualnie jest zalogowany
+        map(res => res.filter(i => i.id !==  this.accountsService.currentUser()?.id))
       )
       .subscribe(res => {
         this.dataSource = new MatTableDataSource(res);
@@ -96,5 +108,9 @@ export class Members {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  onPageSizeChanged(value: PageEvent){
+    this.localStorege.setItem('page-size', value.pageSize)
   }
 }
