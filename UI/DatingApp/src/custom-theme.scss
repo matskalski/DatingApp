@@ -24,6 +24,13 @@ html {
   ));
 }
 
+.excel-button{
+  @include mat.button-overrides((
+    filled-container-color: green,
+    filled-label-text-color: white
+  ));
+}
+
 
 body {
   // Default the application to a light color theme. This can be changed to

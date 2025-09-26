@@ -11,6 +11,11 @@ import { MatPaginator, MatPaginatorIntl, MatPaginatorModule, PageEvent } from '@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { LocalStorageService } from '../../services/localStorage/local-storage-service';
+import * as XLSX from "xlsx";
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MemberDetails } from './member-details/member-details';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @Component({
@@ -21,7 +26,10 @@ import { LocalStorageService } from '../../services/localStorage/local-storage-s
     MatInputModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule, MatIconModule
+    MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule
   ],
   templateUrl: './members.html',
   styleUrl: './members.css'
@@ -40,6 +48,7 @@ export class Members {
   private destroyRef = inject(DestroyRef);
   private accountsService = inject(AccountsService);
   private localStorege = inject(LocalStorageService)
+  private readonly dialog = inject(MatDialog);
 
   constructor() {
     const ps = this.localStorege.getItem('page-size')
@@ -49,7 +58,7 @@ export class Members {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         //nie wyświetlaj na liście użytkownika który aktualnie jest zalogowany
-        map(res => res.filter(i => i.id !==  this.accountsService.currentUser()?.id))
+        map(res => res.filter(i => i.id !== this.accountsService.currentUser()?.id))
       )
       .subscribe(res => {
         this.dataSource = new MatTableDataSource(res);
@@ -101,7 +110,6 @@ export class Members {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue);
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
@@ -109,12 +117,29 @@ export class Members {
     }
   }
 
-  onPageSizeChanged(event: PageEvent){
-    console.log(event.pageSize)
+  onPageSizeChanged(event: PageEvent) {
     this.localStorege.setItem('page-size', event.pageSize)
   }
 
-  test(){
-    console.log("zmiana")
+  exportTableToExcel() {
+    const sheetName = 'testsheet';
+    const fileName = 'testfile'
+
+    let targetTableElm = document.getElementById('data-table');
+    let wb = XLSX.utils.table_to_book(targetTableElm, <XLSX.Table2SheetOpts>{
+      sheet: sheetName
+    });
+    XLSX.writeFile(wb, `${fileName}.xlsx`);
+  }
+
+  showDetails(id: string) {
+    console.log('click')
+
+    const member = this.dataSource.data.find(m => m.id === id)!
+    console.log(member)
+
+    const dialogRef = this.dialog.open(MemberDetails, {
+      data: member
+    });
   }
 }
