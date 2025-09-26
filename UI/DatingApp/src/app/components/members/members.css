@@ -19,3 +19,18 @@
 ::ng-deep .mat-mdc-form-field-subscript-wrapper {
   display: none !important;
 }
+
+/* .gradient-text{
+  background: linear-gradient(
+    to right,
+    #a855f7
+    #ec4899
+    #eab308
+    #ec4899
+    #a855f7
+    #ec4899
+    #eab308
+  );
+  background-size: 300% 300%;
+  background-clip: text;
+} */

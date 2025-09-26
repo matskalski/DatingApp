@@ -1,6 +1,18 @@
 <span class="flex flex-col md:m-10 xl:mx-60 gap-3">
-  <p class="m-auto font-bold text-5xl bg-gradient-to-r text-transparent from-indigo-300 to-indigo-800 bg-clip-text">
-    Lista użytkowników</p>
+  <!-- <p class="m-auto font-bold text-5xl bg-gradient-to-r text-transparent from-indigo-300 to-indigo-800 bg-clip-text animate-text-gradient bg-size-200">
+    Lista użytkowników
+  </p> -->
+  <p class="animate-text-gradient
+            bg-[length:200%]
+            m-auto font-bold
+            text-5xl
+            bg-radial-[circle_at_center]
+            from-[#eab308]
+            to-[#a855f7]
+            bg-clip-text
+            text-transparent">
+    Lista użytkowników
+  </p>
 
   <span class="flex flex-row ml-auto gap-5 items-center mb-5">
     <button matButton="filled" class="excel-button" (click)="exportTableToExcel()">
