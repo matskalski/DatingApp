@@ -49,7 +49,7 @@ describe('home component', () => {
     expect(router.url).toEqual('/register')
   });
 
-  it('register buuton should route to /register path 2', async () => {
+  it('register buuton should route to /register path - with harness', async () => {
     const button = await loader.getHarness(MatButtonHarness.with({ text: 'Register' }));
 
     await button.click();
