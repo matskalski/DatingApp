@@ -32,33 +32,6 @@ mat-form-field.small {
   width: 100px !important;
 }
 
-.gradient-text{
-  background: linear-gradient(
-    to right,
-    #a855f7
-    #ec4899
-    #eab308
-    #ec4899
-    #a855f7
-    #ec4899
-    #eab308
-  );
-  background-size: 300% 300%;
-  background-clip: text;
-}
-
-@theme {
-  --animate-text-gradient: text-gradient 3s ease-in-out infinite alternate;
-
- @keyframes text-gradient {
-    0%, 15% {
-      background-position: 0 50%;
-    }
-    85%, 100% {
-      background-position: 100% 100%;
-    }
-}
-}
 /* stylowanie dla snackbarów */
 .mdc-snackbar__surface {
   color: white;
