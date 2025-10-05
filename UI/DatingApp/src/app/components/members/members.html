@@ -1,82 +1,12 @@
-<span class="flex flex-col md:m-10 xl:mx-60 gap-3">
-  <!-- <p class="m-auto font-bold text-5xl bg-gradient-to-r text-transparent from-indigo-300 to-indigo-800 bg-clip-text animate-text-gradient bg-size-200">
-    Lista użytkowników
-  </p> -->
-  <p class="animate-text-gradient
-            bg-[length:200%]
-            m-auto font-bold
-            text-5xl
-            text-sky-600">
-    Lista użytkowników
-  </p>
+<span class="flex flex-row justify-center mt-8">
+  <mat-button-toggle-group>
+    <mat-button-toggle value="red">
+       <mat-icon>notifications</mat-icon>
+      Red</mat-button-toggle>
+    <mat-button-toggle value="green">Green</mat-button-toggle>
+  </mat-button-toggle-group>
 
-  <span class="flex flex-row ml-auto gap-5 items-center mb-5">
-    <button matButton="filled" class="excel-button" (click)="exportTableToExcel()">
-      <mat-icon>arrow_downward</mat-icon>
-      Export to xlsx
-    </button>
-
-    <mat-form-field class="w-60">
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" (change)="applyFilter($event)" #input>
-      @if (input.value) {
-        <button matSuffix matIconButton (click)="input.value=''; this.dataSource.filter = ''">
-          <mat-icon>close</mat-icon>
-        </button>
-      }
-    </mat-form-field>
-  </span>
-
-
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort id="data-table">
-      <ng-container matColumnDef="image">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center!"> Foto ryja </th>
-        <td mat-cell *matCellDef="let row">
-          <img class="photo" src={{row.imageUrl}}>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="displayName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center!"> Login </th>
-        <td mat-cell *matCellDef="let row"> {{row.displayName}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="dateOfBirth">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center!"> Data urodzenia </th>
-        <td mat-cell *matCellDef="let row"> {{row.dateOfBirth}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center!"> Płeć </th>
-        <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="city">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center!"> Wiocha </th>
-        <td mat-cell *matCellDef="let row"> {{row.city}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="country">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center!"> Kraj </th>
-        <td mat-cell *matCellDef="let row"> {{row.country}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-sky-600! text-white! border-b-2 border-b-black">
-      </tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showDetails(row.id)"
-        matTooltip="Click to show details"
-        class="hover:bg-sky-700! hover:text-white! hover:cursor-pointer hover:font-semibold!">
-      </tr>
-
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-      </tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [showFirstLastButtons]="true" [pageSize]="pageSize"
-      (page)="onPageSizeChanged($event)" aria-label="Select page of members">
-    </mat-paginator>
-  </div>
 </span>
+
+<da-members-list />
+<da-members-list />
