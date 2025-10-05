@@ -76,7 +76,7 @@ describe('nav component', () => {
     expect(formFields.length).toBe(0);
   });
 
-  it('test', async () => {
+  it('should not display login form when user logs in correctly', async () => {
     const loginInput = await loader.getHarness(MatInputHarness.with({ placeholder: 'email' }))
     const passwordInput = await loader.getHarness(MatInputHarness.with({ placeholder: 'password' }))
     const loginButton = await loader.getHarness(MatButtonHarness.with({ text: 'Login' }));
