@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
-import { MemberModel } from '../../../models/member-model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MemberModel } from '../../../../models/member-model';
 
 @Component({
-  selector: 'da-member-details',
+  selector: 'da-member-dialog',
   imports: [
     MatDialogContent,
     MatDialogActions,
@@ -14,11 +14,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatIconModule
   ],
-  templateUrl: './member-details.html',
-  styleUrl: './member-details.css'
+  templateUrl: './member-dialog.html',
+  styleUrl: './member-dialog.css'
 })
-export class MemberDetails {
-  readonly dialogRef = inject(MatDialogRef<MemberDetails>);
+export class MemberDialog {
+  readonly dialogRef = inject(MatDialogRef<MemberDialog>);
   readonly data = inject<MemberModel>(MAT_DIALOG_DATA);
 
   close(): void {

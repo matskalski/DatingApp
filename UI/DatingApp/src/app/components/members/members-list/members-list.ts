@@ -14,8 +14,9 @@ import { LocalStorageService } from '../../../services/localStorage/local-storag
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { MemberDetails } from '../member-details/member-details';
+import { MemberDetails } from '../members-tails/member-details/member-details';
 import * as XLSX from "xlsx";
+import { MemberDialog } from './member-dialog/member-dialog';
 
 @Component({
   selector: 'da-members-list',
@@ -136,7 +137,7 @@ export class MembersList {
     const member = this.dataSource.data.find(m => m.id === id)!
     console.log(member)
 
-    const dialogRef = this.dialog.open(MemberDetails, {
+    const dialogRef = this.dialog.open(MemberDialog, {
       data: member
     });
   }
