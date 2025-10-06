@@ -1,7 +1,6 @@
 export interface MemberModel {
     id: string,
     displayName: string,
-    //email: string
     dateOfBirth: string,
     imageUrl?: string,
     created: string,
