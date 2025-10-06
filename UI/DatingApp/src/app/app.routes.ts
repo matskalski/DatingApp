@@ -13,12 +13,12 @@ import { ServerError } from './shared/errors/server-error/server-error';
 
 export const routes: Routes = [
 
-  //lista routingów dostępnych wyłącznie po zalogowaniu
-  //dodana aby nie dodawać za każdym razem tego samego guardu (authGuard)
   {
     path: '',
     component: Home
   },
+  //lista routingów dostępnych wyłącznie po zalogowaniu
+  //dodana aby nie dodawać za każdym razem tego samego guardu (authGuard)
   {
     path: '',
     runGuardsAndResolvers: 'always',

@@ -14,7 +14,6 @@ import { LocalStorageService } from '../../../services/localStorage/local-storag
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { MemberDetails } from '../members-tails/member-details/member-details';
 import * as XLSX from "xlsx";
 import { MemberDialog } from './member-dialog/member-dialog';
 
