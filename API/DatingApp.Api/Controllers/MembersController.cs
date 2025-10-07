@@ -23,7 +23,7 @@ namespace DatingApp.Api.Controllers
             return Ok(await _membersRepository.GetMembers());
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetMember(string id)
         {
             var member = await _membersRepository.GetMemberById(id);

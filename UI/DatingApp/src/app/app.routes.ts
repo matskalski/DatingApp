@@ -12,11 +12,11 @@ import { ServerError } from './shared/errors/server-error/server-error';
 
 
 export const routes: Routes = [
-
   {
     path: '',
     component: Home
   },
+  { path: 'members/:id', component: MemberDetails },
   //lista routingów dostępnych wyłącznie po zalogowaniu
   //dodana aby nie dodawać za każdym razem tego samego guardu (authGuard)
   {
