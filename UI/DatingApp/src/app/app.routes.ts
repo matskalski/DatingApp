@@ -1,3 +1,4 @@
+import { MemberProfile } from './components/members/members-tails/member-details/member-profile/member-profile';
 import { Routes } from '@angular/router';
 import { Home } from './components/home/home';
 import { Register } from './components/register/register';
@@ -9,6 +10,8 @@ import { authGuard } from './guards/auth-guard';
 import { TestErrors } from './components/test-errors/test-errors';
 import { NotFound } from './shared/errors/not-found/not-found';
 import { ServerError } from './shared/errors/server-error/server-error';
+import { MemberPhotos } from './components/members/members-tails/member-details/member-photos/member-photos';
+import { MemberMessages } from './components/members/members-tails/member-details/member-messages/member-messages';
 
 
 export const routes: Routes = [
@@ -16,7 +19,6 @@ export const routes: Routes = [
     path: '',
     component: Home
   },
-  { path: 'members/:id', component: MemberDetails },
   //lista routingów dostępnych wyłącznie po zalogowaniu
   //dodana aby nie dodawać za każdym razem tego samego guardu (authGuard)
   {
@@ -25,7 +27,16 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'members', component: Members },
-      { path: 'members/:id', component: MemberDetails },
+      {
+        path: 'members/:id',
+        component: MemberDetails,
+        children: [
+          { path: '', redirectTo: 'profile', pathMatch: 'full' },
+          { path: 'profile', component: MemberProfile, title: 'Profile' },
+          { path: 'photos', component: MemberPhotos, title: 'Photos' },
+          { path: 'messages', component: MemberMessages, title: 'Messages' }
+        ]
+      },
       { path: 'messages', component: Messages },
       { path: 'lists', component: Lists },
     ]
