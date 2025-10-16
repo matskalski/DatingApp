@@ -2,13 +2,15 @@ import { Component, input } from '@angular/core';
 import { MemberModel } from '../../../../models/member-model';
 import { MatCard } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { AgePipe } from '../../../../pipes/age-pipe';
 
 
 @Component({
   selector: 'da-member-tail',
   imports: [
     MatCard,
-    RouterLink
+    RouterLink,
+    AgePipe
 ],
   templateUrl: './member-tail.html',
   styleUrl: './member-tail.css'

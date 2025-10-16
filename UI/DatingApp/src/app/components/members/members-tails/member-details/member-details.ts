@@ -1,30 +1,30 @@
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MembersService } from './../../../../services/members/members-service';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { filter, Observable } from 'rxjs';
+import { filter } from 'rxjs';
 import { MemberModel } from '../../../../models/member-model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AgePipe } from '../../../../pipes/age-pipe';
 
 @Component({
   selector: 'da-member-details',
   imports: [
-    AsyncPipe,
     MatCardModule,
     MatButtonModule,
     MatDividerModule,
     RouterLink,
     RouterLinkActive,
-    RouterOutlet
+    RouterOutlet,
+    AgePipe
   ],
   templateUrl: './member-details.html',
   styleUrl: './member-details.css'
 })
 export class MemberDetails implements OnInit {
-  protected member$?: Observable<MemberModel>;
+  protected member = signal<MemberModel | undefined>(undefined)
   protected title = signal<string | undefined>('Profile')
 
   private membersService = inject(MembersService);
@@ -33,7 +33,12 @@ export class MemberDetails implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    this.member$ = this.loadMember();
+    //użycie resolvera
+    this.route.data.subscribe(res =>
+      //resolver w routingu jest zarejestrowany pod propertą member - resolve: {member: membersResolver},
+      this.member.set(res['member'])
+    );
+
     this.title.set(this.route.firstChild?.snapshot?.title);
 
     this.router.events
@@ -44,14 +49,5 @@ export class MemberDetails implements OnInit {
       .subscribe(() =>
         this.title.set(this.route.firstChild?.snapshot?.title)
       )
-  }
-
-  loadMember() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (!id) {
-      return;
-    }
-
-    return this.membersService.getMember(id);
-  }
+  };
 }

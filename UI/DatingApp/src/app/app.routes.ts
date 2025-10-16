@@ -12,6 +12,7 @@ import { NotFound } from './shared/errors/not-found/not-found';
 import { ServerError } from './shared/errors/server-error/server-error';
 import { MemberPhotos } from './components/members/members-tails/member-details/member-photos/member-photos';
 import { MemberMessages } from './components/members/members-tails/member-details/member-messages/member-messages';
+import { membersResolver } from './resolvers/members/members-resolver';
 
 
 export const routes: Routes = [
@@ -29,6 +30,8 @@ export const routes: Routes = [
       { path: 'members', component: Members },
       {
         path: 'members/:id',
+        resolve: {member: membersResolver},
+        runGuardsAndResolvers: 'always',
         component: MemberDetails,
         children: [
           { path: '', redirectTo: 'profile', pathMatch: 'full' },

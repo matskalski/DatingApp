@@ -11,7 +11,7 @@
             </a>
             <nav class="lg:flex gap-3 my-2 uppercase text-lg text-white hidden">
                 @if(accountService.currentUser()){
-                <a routerLink="/members" routerLinkActive="text-blue-700">Matches</a>
+                <a routerLink="/members" routerLinkActive="text-blue-700" [routerLinkActiveOptions]="{exact: true}">Matches</a>
                 <a routerLink="/lists" routerLinkActive="text-blue-700">Lists</a>
                 <a routerLink="/messages" routerLinkActive="text-blue-700">Messages</a>
                 }
