@@ -131,10 +131,7 @@ export class MembersList {
   }
 
   showDetails(id: string) {
-    console.log('click')
-
     const member = this.dataSource.data.find(m => m.id === id)!
-    console.log(member)
 
     const dialogRef = this.dialog.open(MemberDialog, {
       data: member

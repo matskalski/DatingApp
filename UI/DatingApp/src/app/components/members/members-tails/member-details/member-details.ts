@@ -1,6 +1,7 @@
+import { AccountsService } from './../../../../services/accounts/accounts-service';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MembersService } from './../../../../services/members/members-service';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { filter } from 'rxjs';
 import { MemberModel } from '../../../../models/member-model';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,13 +25,18 @@ import { AgePipe } from '../../../../pipes/age-pipe';
   styleUrl: './member-details.css'
 })
 export class MemberDetails implements OnInit {
-  protected member = signal<MemberModel | undefined>(undefined)
-  protected title = signal<string | undefined>('Profile')
+  protected member = signal<MemberModel | undefined>(undefined);
+  protected title = signal<string | undefined>('Profile');
+  protected isCurrentUser = computed(() => {
+    return this.accountsService.currentUser()?.id === this.route.snapshot.paramMap.get('id')
+  })
+  protected membersService = inject(MembersService);
 
-  private membersService = inject(MembersService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
+  private accountsService = inject(AccountsService)
+
 
   ngOnInit(): void {
     //użycie resolvera

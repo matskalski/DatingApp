@@ -1,5 +1,5 @@
 @if(member(); as member){
-<div class="flex flex-col gap-3">
+<div test-id="member-data" class="flex flex-col gap-3">
   <div class="flex gap-3">
     <span class="font-semibold ">Member since:</span>
     <span>{{member.created | date: 'longDate'}} </span>
@@ -8,7 +8,35 @@
     <span class="font-semibold ">Last active:</span>
     <span>{{member.lastActive | date: 'dd MM yyyy'}} </span>
   </div>
-  <h3 class="text-lg font-semibold text-violet-800">About {{member.displayName}}</h3>
-  <div>{{member.description}}</div>
+  @if(!membersService.editMode()){
+  <h3 test-id="display-name" class="text-lg font-semibold text-violet-800">About {{member.displayName}}</h3>
+  <div test-id="description">{{member.description}}</div>
+  }
+  @else{
+  <form test-id="edit-form" [formGroup]="form" class="flex flex-col" (ngSubmit)="updateProfile()">
+    <span class="flex flex-row justify-between!">
+      <mat-form-field class="w-xs mb-1">
+        <mat-label>Display name</mat-label>
+        <input matInput formControlName="displayName">
+        <mat-error>Display name is required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-xs mb-1">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city">
+        <mat-error>City name is required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-xs mb-1">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country">
+        <mat-error>Country name is required</mat-error>
+      </mat-form-field>
+    </span>
+    <mat-form-field class="mb-1">
+      <mat-label>Description</mat-label>
+      <textarea class="h-30!" matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <button matButton="outlined" type="submit">Submit</button>
+  </form>
+  }
 </div>
 }

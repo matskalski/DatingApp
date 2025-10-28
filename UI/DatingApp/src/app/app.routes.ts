@@ -13,6 +13,7 @@ import { ServerError } from './shared/errors/server-error/server-error';
 import { MemberPhotos } from './components/members/members-tails/member-details/member-photos/member-photos';
 import { MemberMessages } from './components/members/members-tails/member-details/member-messages/member-messages';
 import { membersResolver } from './resolvers/members/members-resolver';
+import { preventUnsavedChangesGuard } from './guards/prevent-unsaved-changes-guard';
 
 
 export const routes: Routes = [
@@ -35,7 +36,7 @@ export const routes: Routes = [
         component: MemberDetails,
         children: [
           { path: '', redirectTo: 'profile', pathMatch: 'full' },
-          { path: 'profile', component: MemberProfile, title: 'Profile' },
+          { path: 'profile', component: MemberProfile, title: 'Profile', canDeactivate: [preventUnsavedChangesGuard] },
           { path: 'photos', component: MemberPhotos, title: 'Photos' },
           { path: 'messages', component: MemberMessages, title: 'Messages' }
         ]

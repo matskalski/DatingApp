@@ -6,15 +6,19 @@
         <img mat-card-image src={{member.imageUrl}} class="w-3/4">
       </div>
       <mat-card-header class="flex flex-col">
-        <mat-card-title class="text-center text-violet-800">{{member.displayName}}, {{member.dateOfBirth | age}}</mat-card-title>
+        <mat-card-title class="text-center text-violet-800">{{member.displayName}}, {{member.dateOfBirth |
+          age}}</mat-card-title>
         <mat-card-subtitle class="text-center">{{member.city}}, {{member.country}}</mat-card-subtitle>
       </mat-card-header>
-      <mat-divider class="p-3 md:p-6"/>
+      <mat-divider class="p-3 md:p-6" />
       <mat-card-content>
         <ul class="flex flex-col gap-1 md:gap-6">
-          <li><a routerLink="profile" routerLinkActive="text-violet-800" class="font-medium text-2xl lg:text-3xl 2xl:text-5xl">Profile</a></li>
-          <li><a routerLink="photos" routerLinkActive="text-violet-800" class="font-medium text-2xl lg:text-3xl 2xl:text-5xl">Photos</a></li>
-          <li><a routerLink="messages" routerLinkActive="text-violet-800" class="font-medium text-2xl lg:text-3xl 2xl:text-5xl">Messages</a></li>
+          <li><a routerLink="profile" routerLinkActive="text-violet-800"
+              class="font-medium text-2xl lg:text-3xl 2xl:text-5xl">Profile</a></li>
+          <li><a routerLink="photos" routerLinkActive="text-violet-800"
+              class="font-medium text-2xl lg:text-3xl 2xl:text-5xl">Photos</a></li>
+          <li><a routerLink="messages" routerLinkActive="text-violet-800"
+              class="font-medium text-2xl lg:text-3xl 2xl:text-5xl">Messages</a></li>
         </ul>
       </mat-card-content>
       <mat-card-actions class="flex flex-row justify-between gap-3 mt-7">
@@ -24,12 +28,20 @@
     </mat-card>
   </div>
 
- <div class="flex flex-col justify-start w-2/3 lg:w-3/4 h-[90vh]">
+  <div class="flex flex-col justify-start w-2/3 lg:w-3/4 h-[90vh]">
     <mat-card appearance="outlined">
       <mat-card-header class="flex flex-col">
-        <mat-card-title class="text-center text-violet-800">{{title()}}</mat-card-title>
+        <div class="flex justify-between items-center">
+          <mat-card-title class="text-center text-violet-800">{{title()}}</mat-card-title>
+          @if(isCurrentUser()){
+          <button mat-button="outlined" (click)="membersService.editMode.set(!membersService.editMode())">
+            {{membersService.editMode() ? 'Cancel' : 'Edit'}}
+          </button>
+          }
+        </div>
+
       </mat-card-header>
-      <mat-divider class="p-3 md:p-6"/>
+      <mat-divider class="p-3 md:p-6" />
       <mat-card-content>
         <router-outlet />
       </mat-card-content>

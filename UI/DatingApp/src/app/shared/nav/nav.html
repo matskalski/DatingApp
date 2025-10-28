@@ -23,7 +23,7 @@
                     <button matButton matButton="outlined" class="!text-white !border-white"
                         [matMenuTriggerFor]="menu">Menu</button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Edit profile</button>
+                        <button mat-menu-item (click)="editProfile()">Edit profile</button>
                         <button mat-menu-item (click)="logout()">Logout</button>
                     </mat-menu>
                 </span>

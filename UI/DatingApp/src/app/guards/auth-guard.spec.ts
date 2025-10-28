@@ -2,7 +2,7 @@ import { TestBed } from "@angular/core/testing";
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterModule, RouterStateSnapshot } from "@angular/router";
 import { authGuard } from "./auth-guard";
 import { AccountsService } from "../services/accounts/accounts-service";
-import { provideZonelessChangeDetection, signal } from "@angular/core";
+import { Component, provideZonelessChangeDetection, signal } from "@angular/core";
 import { SnackbarService } from "../services/snackbar/snackbar-service";
 
 describe('authGuard', () => {
@@ -22,7 +22,9 @@ describe('authGuard', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        [RouterModule.forRoot([])]
+        [RouterModule.forRoot([
+          {path: 'home', component: DummyComponent}
+        ])]
       ],
       providers: [
         {
@@ -37,7 +39,9 @@ describe('authGuard', () => {
       ]
     });
 
+    TestBed.inject(AccountsService)
     router = TestBed.inject(Router);
+
   })
 
   it('should be created', () => {
@@ -45,12 +49,16 @@ describe('authGuard', () => {
   });
 
   it('guard returns true when user is not null', () => {
-    accountsServiceMock.currentUser.set({
+    //test musi mieć własną instancję serwisu
+    //aby nie nadpisywać współdzielonej zmiennej
+    const accountService = TestBed.inject(AccountsService)
+
+    accountService.currentUser.set({
       id: '1',
       displayName: 'displayName',
       email: "test@test.pl",
       token: '12345@$',
-      imageUrl: null
+      imageUrl: undefined
     })
 
     //zdefiniowanie parametrów
@@ -66,6 +74,12 @@ describe('authGuard', () => {
   })
 
   it('guard returns false when user is null', () => {
+    //test musi mieć własną instancję serwisu
+    //aby nie nadpisywać współdzielonej zmiennej
+    const accountService = TestBed.inject(AccountsService)
+
+    accountService.currentUser.set(null);
+
     //zdefiniowanie parametrów
     const route: ActivatedRouteSnapshot = {} as any;
     const state: RouterStateSnapshot = {
@@ -78,3 +92,10 @@ describe('authGuard', () => {
     expect(result!).toBe(false)
   })
 })
+
+@Component({
+  selector: 'da-dummy',
+  template: '',
+})
+export class DummyComponent  { }
+

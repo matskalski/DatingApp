@@ -69,4 +69,8 @@ export class Nav {
     this.accountService.logout()
     this.router.navigateByUrl('/home')
   }
+
+  editProfile(){
+    this.router.navigateByUrl(`members/${this.accountService.currentUser()?.id}`)
+  }
 }
