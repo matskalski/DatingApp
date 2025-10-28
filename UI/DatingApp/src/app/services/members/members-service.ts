@@ -1,3 +1,4 @@
+import { UpdateMember } from './../../models/update-member.model';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { MemberModel } from '../../models/member-model';
@@ -23,5 +24,9 @@ export class MembersService {
 
   getMemberPhotos(id: string) : Observable<PhotoModel[]> {
     return this.httpClient.get<PhotoModel[]>(`${this.baseUrl}members/${id}/photos`);
+  }
+
+  updateMember(updateMember: UpdateMember) : Observable<MemberModel> {
+    return this.httpClient.put<MemberModel>(`${this.baseUrl}members`, updateMember)
   }
 }

@@ -23,5 +23,13 @@ namespace DatingApp.Api.Entities
         [JsonIgnore]
         [ForeignKey(nameof(Id))]
         public AppUser User { get; set; } = null!;
+
+        public void Update(string displayName, string? description, string city, string country)
+        {
+            DisplayName = displayName;
+            Description = description;
+            City = city;
+            Country = country;
+        }
     }
 }

@@ -1,7 +1,10 @@
-﻿using DatingApp.Api.Entities;
+﻿using DatingApp.Api.DTOs;
+using DatingApp.Api.Entities;
+using DatingApp.Api.Extensions;
 using DatingApp.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DatingApp.Api.Controllers
 {
@@ -40,6 +43,33 @@ namespace DatingApp.Api.Controllers
         public async Task<ActionResult<IReadOnlyList<Photo>>> GetMemberPhotos(string id)
         {
             return Ok(await _membersRepository.GetPhotosForMember(id));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateMember(MemberUpdateDto memberUpdate)
+        {
+            //var memberId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //if (memberId == null) 
+            //{
+            //    return BadRequest("No id found in token");
+            //}
+
+            var memberId = User.GetMemberId();
+
+            var member = await _membersRepository.GetMemberById(memberId);
+
+            if (member is null) 
+            {
+                return BadRequest("Cound not get member");
+            }
+
+            member.Update(memberUpdate.DisplayName, memberUpdate.Description, memberUpdate.City, memberUpdate.Country);
+
+            await _membersRepository.Update(member);
+
+            return Ok(member);
+
         }
 
     }

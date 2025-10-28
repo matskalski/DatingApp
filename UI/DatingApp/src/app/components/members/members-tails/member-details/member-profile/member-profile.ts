@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { UpdateMember } from '../../../../../models/update-member.model';
 
 @Component({
   selector: 'da-member-profile',
@@ -74,6 +75,17 @@ export class MemberProfile implements OnInit, OnDestroy {
     if (!this.member()) {
       return;
     };
+
+    let updateMember: UpdateMember = {
+      displayName: this.form.controls['displayName'].value,
+      description: this.form.controls['description'].value,
+      city: this.form.controls['city'].value,
+      country: this.form.controls['country'].value
+    }
+
+    this.membersService.updateMember(updateMember).subscribe(
+      res => this.member.set(res)
+    )
 
     this.membersService.editMode.set(false);
   };
