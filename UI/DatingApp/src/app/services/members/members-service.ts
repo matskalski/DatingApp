@@ -2,7 +2,7 @@ import { UpdateMember } from './../../models/update-member.model';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { MemberModel } from '../../models/member-model';
-import { Observable } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PhotoModel } from '../../models/photo-model';
 
@@ -13,13 +13,18 @@ export class MembersService {
   private httpClient: HttpClient = inject(HttpClient);
   private baseUrl = environment.apiUrl;
   editMode = signal(false);
+  member = signal<MemberModel | null>(null)
 
   getMembers() : Observable<MemberModel[]> {
     return this.httpClient.get<MemberModel[]>(`${this.baseUrl}members`);
   };
 
   getMember(id: string){
-    return this.httpClient.get<MemberModel>(`${this.baseUrl}members/${id}`);
+    return this.httpClient.get<MemberModel>(`${this.baseUrl}members/${id}`)
+      .pipe(
+        tap(mbr => this.member.set(mbr))
+      )
+    ;
   };
 
   getMemberPhotos(id: string) : Observable<PhotoModel[]> {

@@ -32,7 +32,7 @@ export class MemberProfile implements OnInit, OnDestroy {
   //aby zapobiec zamknięciu przeglądarki lub przejściu pod inny adres poza aplikacją bez zapisanych zmian dodany został host listener
   //dzięki temu zanim to nastąpi pojawi się komunikat o niezpisanych zmianach
   @HostListener('window:beforeunload', ['$event']) notify($event:BeforeUnloadEvent){
-    if(this.form.dirty){
+    if(this.form.dirty && this.membersService.editMode()){
       $event.preventDefault()
     }
   }
@@ -84,10 +84,11 @@ export class MemberProfile implements OnInit, OnDestroy {
     }
 
     this.membersService.updateMember(updateMember).subscribe(
-      res => this.member.set(res)
     )
 
     this.membersService.editMode.set(false);
+
+    console.log(this.membersService.editMode())
   };
 
   ngOnDestroy(): void {
