@@ -10,6 +10,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorsInterceptor } from './interceptors/errors-interceptor';
 import { initializeApp } from './app-initializer';
 import { jwtInterceptor } from './interceptors/jwt-interceptor';
+import { loadingInterceptor } from './interceptors/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +20,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([
         errorsInterceptor,
-        jwtInterceptor
+        jwtInterceptor,
+        loadingInterceptor
       ])
     ),
     provideAppInitializer(initializeApp)

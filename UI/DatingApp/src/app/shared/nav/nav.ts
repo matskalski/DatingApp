@@ -1,3 +1,4 @@
+import { LoadingService } from './../../services/loading/loading-service';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LoginModel } from '../../models/login-model';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { tap } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'da-nav',
@@ -28,7 +30,8 @@ import { tap } from 'rxjs';
     CommonModule,
     MatMenuModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    MatProgressSpinnerModule
   ],
   templateUrl: './nav.html',
   styleUrl: './nav.css'
@@ -36,6 +39,7 @@ import { tap } from 'rxjs';
 export class Nav {
   private fb = inject(FormBuilder);
   protected accountService = inject(AccountsService);
+  protected LoadingService = inject(LoadingService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
@@ -70,7 +74,7 @@ export class Nav {
     this.router.navigateByUrl('/home')
   }
 
-  editProfile(){
+  editProfile() {
     this.router.navigateByUrl(`members/${this.accountService.currentUser()?.id}`)
   }
 }

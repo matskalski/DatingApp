@@ -35,6 +35,9 @@ export class Register {
     ]],
     password: ['', [
       Validators.required
+    ]],
+    confirmPassword: ['', [
+      Validators.required
     ]]
   })
 
@@ -43,7 +46,8 @@ export class Register {
       const registerModel: RegisterModel = {
         email: this.form.controls['email'].value,
         displayName: this.form.controls['displayName'].value,
-        password: this.form.controls['password'].value
+        password: this.form.controls['password'].value,
+        confirmPassword: this.form.controls['confirmPassword'].value
       }
 
       this.accountsService.register(registerModel)

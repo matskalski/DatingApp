@@ -17,6 +17,11 @@
                 <input matInput formControlName="password">
                 <mat-error>Password name is required</mat-error>
               </mat-form-field>
+              <mat-form-field>
+                <mat-label>Confirm password</mat-label>
+                <input matInput formControlName="confirmPassword">
+                <!-- <mat-error>Password name is required</mat-error> -->
+              </mat-form-field>
               <div class="flex flex-row gap-2 justify-end">
                 <button matButton="outlined" [routerLink]="'/home'">Cancel</button>
                 <button matButton="outlined" type="submit">Register</button>

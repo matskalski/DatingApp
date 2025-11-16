@@ -5,6 +5,7 @@ import { AccountsService } from "./accounts-service";
 import { TestBed } from "@angular/core/testing";
 import { provideHttpClient } from "@angular/common/http";
 import { UserModel } from "../../models/user-model";
+import { RegisterModel } from '../../models/register-model';
 
 
 describe('accountsService', () => {
@@ -18,7 +19,7 @@ describe('accountsService', () => {
     TestBed.configureTestingModule({
       providers: [
         AccountsService,
-        {provide: SnackbarService, useValue: snackbarServiceMock},
+        { provide: SnackbarService, useValue: snackbarServiceMock },
         provideHttpClient(),
         provideHttpClientTesting()
       ]
@@ -28,7 +29,7 @@ describe('accountsService', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
-   afterEach(() => {
+  afterEach(() => {
     httpTestingController.verify();
   });
 
@@ -36,8 +37,8 @@ describe('accountsService', () => {
     expect(accountsService).toBeTruthy()
   })
 
-  describe('login', ()=>{
-    it('sets correct user after succesfully login', ()=>{
+  describe('login', () => {
+    it('sets correct user after succesfully login', () => {
       let user: UserModel = {
         id: "id",
         displayName: "user1",
@@ -45,7 +46,7 @@ describe('accountsService', () => {
         token: "12345test",
       };
 
-      let loginModel: LoginModel ={
+      let loginModel: LoginModel = {
         email: "user1@test.com",
         password: "12345p#"
       }
@@ -53,7 +54,7 @@ describe('accountsService', () => {
       let result;
 
       accountsService.login(loginModel).subscribe(resp => {
-         result = resp;
+        result = resp;
       })
 
       const req = httpTestingController.expectOne('https://localhost:7144/api/accounts/login');
@@ -63,8 +64,8 @@ describe('accountsService', () => {
       expect(accountsService.currentUser()).toBe(user);
     });
 
-     it('when http request returns error then result should be null ad snackbar service error function should been called', ()=>{
-      let loginModel: LoginModel ={
+    it('when http request returns error then result should be null ad snackbar service error function should been called', () => {
+      let loginModel: LoginModel = {
         email: "user1@test.com",
         password: "12345p#"
       }
@@ -72,7 +73,7 @@ describe('accountsService', () => {
       let result;
 
       accountsService.login(loginModel).subscribe(resp => {
-         result = resp;
+        result = resp;
       })
 
       const req = httpTestingController.expectOne('https://localhost:7144/api/accounts/login');
@@ -83,8 +84,8 @@ describe('accountsService', () => {
     });
   });
 
-  describe('accountsService currentUser should to be null and user key should be removed from localStorage', ()=>{
-    it('test', ()=>{
+  describe('logout', () => {
+    it('accountsService currentUser should to be null and user key should be removed from localStorage', () => {
       let user: UserModel = {
         id: "id",
         displayName: "user1",
@@ -102,5 +103,34 @@ describe('accountsService', () => {
       const userFromLocalStorage = localStorage.getItem('user');
       expect(userFromLocalStorage).toBe(null);
     });
-  })
+  });
+
+  describe('register', () => {
+    it('test', ()=>{
+       var registerModel: RegisterModel = {
+      email: "user1@test.com",
+      displayName: "name",
+      password: "password"
+    };
+
+    let user: UserModel = {
+      id: "id",
+      displayName: "user1",
+      email: "user1@test.com",
+      token: "12345test",
+    };
+
+    let result;
+
+    accountsService.register(registerModel).subscribe(resp => {
+      result = resp;
+    })
+
+    const req = httpTestingController.expectOne('https://localhost:7144/api/accounts/register');
+    req.flush(user)
+
+    expect(accountsService.currentUser()).toBeTruthy()
+    expect(accountsService.currentUser()).toBe(user)
+    });
+  });
 })

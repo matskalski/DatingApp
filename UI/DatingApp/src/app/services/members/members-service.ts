@@ -1,10 +1,10 @@
+import { PhotoModel } from './../../models/photo-model';
 import { UpdateMember } from './../../models/update-member.model';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { MemberModel } from '../../models/member-model';
-import { Observable, take, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PhotoModel } from '../../models/photo-model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +33,20 @@ export class MembersService {
 
   updateMember(updateMember: UpdateMember) : Observable<MemberModel> {
     return this.httpClient.put<MemberModel>(`${this.baseUrl}members`, updateMember)
+  }
+
+  uploadPhoto(file: File){
+    const formData = new FormData();
+    formData.append('file', file);
+    console.log('aaa', formData)
+    return this.httpClient.post<PhotoModel>(`${this.baseUrl}members/add-photo`, formData);
+  }
+
+  setMainPhoto(photoId: number){
+    return this.httpClient.put(`${this.baseUrl}members/set-main-photo/${photoId}`,{})
+  }
+
+  deletePhoto(photoId: number){
+    return this.httpClient.delete(`${this.baseUrl}members/delete-photo/${photoId}`)
   }
 }

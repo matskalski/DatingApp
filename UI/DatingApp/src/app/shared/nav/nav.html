@@ -16,6 +16,11 @@
                 <a routerLink="/messages" routerLinkActive="text-blue-700">Messages</a>
                 }
             </nav>
+
+            @if(LoadingService.busuRequestCount() > 0){
+              <mat-spinner [diameter]="50"></mat-spinner>
+            }
+
             <div class="flex align-middle ml-auto gap-3 h-full">
                 @if (accountService.currentUser()){
                 <span class="flex gap-3 items-center">

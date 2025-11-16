@@ -1,13 +1,28 @@
-<p>member-photos works!</p>
-@if(photos$ | async; as photos){
-  @if(photos.length > 0){
-    <div class="grid grid-cols-4 auto-rows-min gap-3 p-5 h-[65vh] overflow-auto">
-      @for(photo of photos; track photo.id){
-        <img src="{{photo.url}}" alt="photo of member" class="w-full rounded-lg" />
-      }
-      @for(photo of photoMocks; track $index){
-        <img src="{{photo.url}}" alt="photo of member" class="w-full rounded-lg" />
-      }
-    </div>
+@if(!membersService.editMode()){
+@if(photos() ; as photos){
+@if(photos.length > 0){
+<div class="grid grid-cols-4 auto-rows-min gap-3 p-5 h-[65vh] overflow-auto">
+  @for(photo of photos; track photo.id){
+  <div class="relative">
+    <img src="{{photo.url}}" alt="photo of member" class="w-full rounded-lg" />
+    @if(accountsService.currentUser()?.id === membersService.member()?.id){
+    <button matIconButton class="absolute! top-1! right-1! z-50! cursor-pointer!" (click)="setMainPhoto(photo)">
+      <mat-icon [class.text-amber-300!]="photo.url === membersService.member()?.imageUrl">stars</mat-icon>
+    </button>
+    <button matIconButton class="absolute! top-1! left-1! z-50! cursor-pointer!" (click)="deletePhoto(photo.id)">
+      <mat-icon class="text-red-600!">delete</mat-icon>
+    </button>
+    }
+
+  </div>
   }
+</div>
+}
+@else {
+<p class="text-cener text-grey-500">No photos available</p>
+}
+}
+}
+@else {
+<da-image-upload (uploadFile)="onUploadImage($event)" [loading]="loading()" />
 }

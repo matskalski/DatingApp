@@ -1,4 +1,5 @@
 using DatingApp.Api.Data;
+using DatingApp.Api.Helpers;
 using DatingApp.Api.Middlewares;
 using DatingApp.Api.Repositories;
 using DatingApp.Api.Repositories.Interfaces;
@@ -31,8 +32,11 @@ builder.Services.AddCors(setup =>
 
 builder.Services.AddScoped<ITokensService, TokensService>();
 builder.Services.AddScoped<IMembersRepository, MembersRepository>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 
 builder.Services.AddScoped<ExceptionMiddleware>();
+
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>

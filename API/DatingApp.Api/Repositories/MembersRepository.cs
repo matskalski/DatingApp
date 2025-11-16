@@ -22,12 +22,16 @@ namespace DatingApp.Api.Repositories
 
         public Task<Member?> GetMemberById(string id)
         {
-            return _context.Members.FirstOrDefaultAsync(m => m.Id.Equals(id));
+            return _context.Members
+                .Include(i => i.User)
+                .Include(i => i.Photos)
+                .FirstOrDefaultAsync(m => m.Id.Equals(id));
         }
 
         public Task<IReadOnlyList<Member>> GetMembers()
         {
             return _context.Members
+                .Include(x => x.Photos)
                 .ToListAsync()
                 .ContinueWith(x => x.Result as IReadOnlyList<Member>);
         }
