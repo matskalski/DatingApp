@@ -107,10 +107,11 @@ describe('accountsService', () => {
 
   describe('register', () => {
     it('test', ()=>{
-       var registerModel: RegisterModel = {
+      var registerModel: RegisterModel = {
       email: "user1@test.com",
       displayName: "name",
-      password: "password"
+      password: "password",
+      confirmPassword: "password"
     };
 
     let user: UserModel = {

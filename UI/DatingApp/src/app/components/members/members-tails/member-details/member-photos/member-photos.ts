@@ -40,11 +40,11 @@ export class MemberPhotos implements OnInit {
     }
   };
 
-  get photoMocks(){
-    return Array.from({length: 20}, (_, i) => ({
-      url: 'user.png'
-    }));
-  }
+  // get photoMocks(){
+  //   return Array.from({length: 20}, (_, i) => ({
+  //     url: 'user.png'
+  //   }));
+  // }
 
   onUploadImage(file: File){
     this.loading.set(true);
