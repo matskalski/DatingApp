@@ -52,7 +52,7 @@ export class MembersList {
     const ps = this.localStorage.getItem('page-size')
     ps !== null ? this.pageSize = +ps : 5
 
-    this.membersService.getMembers()
+    this.membersService.getAllMembers()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         //nie wyświetlaj na liście użytkownika który aktualnie jest zalogowany

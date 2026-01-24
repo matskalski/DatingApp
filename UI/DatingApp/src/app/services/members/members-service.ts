@@ -1,10 +1,11 @@
 import { PhotoModel } from './../../models/photo-model';
 import { UpdateMember } from './../../models/update-member.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { MemberModel } from '../../models/member-model';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { PaginatedResult } from '../../models/pagination-model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,17 @@ export class MembersService {
   editMode = signal(false);
   member = signal<MemberModel | null>(null)
 
-  getMembers() : Observable<MemberModel[]> {
-    return this.httpClient.get<MemberModel[]>(`${this.baseUrl}members`);
+  getMembers(pageNumber: number = 1, pageSize: number = 5) : Observable<PaginatedResult<MemberModel>> {
+    let params = new HttpParams();
+
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+
+    return this.httpClient.get<PaginatedResult<MemberModel>>(`${this.baseUrl}members`, {params: params});
+  };
+
+  getAllMembers() : Observable<MemberModel[]> {
+    return this.httpClient.get<MemberModel[]>(`${this.baseUrl}members/getAllMembers`);
   };
 
   getMember(id: string){

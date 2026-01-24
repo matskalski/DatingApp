@@ -1,3 +1,4 @@
+import { PaginatedResult } from './../../../models/pagination-model';
 import { Observable } from 'rxjs';
 import { MembersService } from './../../../services/members/members-service';
 import { Component, inject } from '@angular/core';
@@ -15,10 +16,10 @@ import { MemberTail } from './member-tail/member-tail';
   styleUrl: './members-tails.css'
 })
 export class MembersTails {
-  protected members$: Observable<MemberModel[]>;
+  protected paginatedMembers$: Observable<PaginatedResult<MemberModel>>;
   private membersService = inject(MembersService);
 
   constructor(){
-    this.members$ = this.membersService.getMembers();
+    this.paginatedMembers$ = this.membersService.getMembers();
   }
 }

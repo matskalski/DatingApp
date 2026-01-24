@@ -1,5 +1,6 @@
 ﻿using DatingApp.Api.Data;
 using DatingApp.Api.Entities;
+using DatingApp.Api.Helpers;
 using DatingApp.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,8 @@ namespace DatingApp.Api.Repositories
             await _context.SaveChangesAsync();
         }
 
+    
+
         public Task<Member?> GetMemberById(string id)
         {
             return _context.Members
@@ -28,7 +31,14 @@ namespace DatingApp.Api.Repositories
                 .FirstOrDefaultAsync(m => m.Id.Equals(id));
         }
 
-        public Task<IReadOnlyList<Member>> GetMembers()
+        public async Task<PaginatedResult<Member>> GetMembers(PagingParams pagingParams)
+        {
+            var query = _context.Members.AsQueryable();
+
+            return await PaginationHelper.CreateAsync(query, pagingParams.PageNumber, pagingParams.PageSize);            
+        }
+
+        public Task<IReadOnlyList<Member>> GetAllMembers()
         {
             return _context.Members
                 .Include(x => x.Photos)

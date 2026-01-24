@@ -1,9 +1,9 @@
 ﻿using DatingApp.Api.DTOs;
 using DatingApp.Api.Entities;
 using DatingApp.Api.Extensions;
+using DatingApp.Api.Helpers;
 using DatingApp.Api.Repositories.Interfaces;
 using DatingApp.Api.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.Api.Controllers
@@ -23,9 +23,15 @@ namespace DatingApp.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers()
+        public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers([FromQuery] PagingParams pagingParams)
         {
-            return Ok(await _membersRepository.GetMembers());
+            return Ok(await _membersRepository.GetMembers(pagingParams));
+        }
+
+        [HttpGet("getAllMembers")]
+        public async Task<ActionResult<IReadOnlyList<Member>>> GetallMembers()
+        {
+            return Ok(await _membersRepository.GetAllMembers());
         }
 
         [HttpGet("{id}")]
