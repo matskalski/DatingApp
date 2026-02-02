@@ -1,5 +1,5 @@
 export interface Pagination {
-  PageNumber: number,
+  currentPage: number,
   pageSize: number,
   totalCount: number,
   totalPages: number
@@ -7,5 +7,5 @@ export interface Pagination {
 
 export interface PaginatedResult<T> {
   items: T[];
-  matadata: Pagination;
+  metadata: Pagination;
 }

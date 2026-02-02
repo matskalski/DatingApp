@@ -8,12 +8,13 @@ const cache = new Map<string, HttpEvent<unknown>>()
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   const loadingService = inject(LoadingService);
 
-  if(req.method === 'GET'){
-    const cachedResp = cache.get(req.url);
-    if(cachedResp){
-        return of(cachedResp);
-    }
-  }
+  //zakomentowane aby działał paginator
+  // if(req.method === 'GET'){
+  //   const cachedResp = cache.get(req.url);
+  //   if(cachedResp){
+  //       return of(cachedResp);
+  //   }
+  // }
 
   loadingService.busy();
 
