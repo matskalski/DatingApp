@@ -7,7 +7,7 @@ namespace DatingApp.Api.Repositories.Interfaces
     {
         Task Add(Member member);
         Task Update(Member member);
-        Task<PaginatedResult<Member>> GetMembers(PagingParams pagingParams);
+        Task<PaginatedResult<Member>> GetMembers(MemberParams memberParams);
         Task<IReadOnlyList<Member>> GetAllMembers();
         Task<Member?> GetMemberById(string id);
         Task<IReadOnlyList<Photo>> GetPhotosForMember(string memberId);

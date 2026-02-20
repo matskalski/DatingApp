@@ -4,14 +4,18 @@ using DatingApp.Api.Extensions;
 using DatingApp.Api.Helpers;
 using DatingApp.Api.Repositories.Interfaces;
 using DatingApp.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //zawarte w BaseApiController
+    //[Route("api/[controller]")]
+    //[ApiController]
+
+
     //[Authorize]
-    public class MembersController : ControllerBase
+    public class MembersController : BaseApiController
     {
         private readonly IMembersRepository _membersRepository;
         private readonly IPhotoService _photoService;
@@ -23,9 +27,11 @@ namespace DatingApp.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers([FromQuery] PagingParams pagingParams)
+        public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers([FromQuery] MemberParams memberParams)
         {
-            return Ok(await _membersRepository.GetMembers(pagingParams));
+            memberParams.CurrentMemberId = User.GetMemberId();
+
+            return Ok(await _membersRepository.GetMembers(memberParams));
         }
 
         [HttpGet("getAllMembers")]

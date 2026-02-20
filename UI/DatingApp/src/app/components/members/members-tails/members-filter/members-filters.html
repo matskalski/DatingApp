@@ -1,0 +1,25 @@
+<form lass="flex flex-col h-42">
+  <span class="w-full">
+    <mat-form-field class="w-full">
+      <mat-label>Płeć</mat-label>
+        <select matNativeControl name="gender" required [(ngModel)]="data.gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+    </mat-form-field>
+  </span>
+  <span class="w-full">
+    <mat-form-field class="w-1/2">
+      <mat-label>Wiek minimum</mat-label>
+      <input type="number" name="minAge" matInput [(ngModel)]="data.minAge">
+    </mat-form-field>
+    <mat-form-field class="w-1/2">
+      <mat-label>Wiek maksimum</mat-label>
+      <input type="number" name="maxAge" matInput [(ngModel)]="data.maxAge">
+    </mat-form-field>
+  </span>
+  <span class="flex w-full justify-center py-3 gap-3">
+    <button matButton="outlined" [mat-dialog-close]="result()" cdkFocusInitial>Zastosuj</button>
+    <button matButton="outlined" (click)="close()">Zamknij</button>
+  </span>
+</form>

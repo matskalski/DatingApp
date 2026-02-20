@@ -1,7 +1,11 @@
-
-
-@if(paginatedMembers$ | async; as paginatedResult){
-  @if(paginatedResult.metadata; as metadata){
+@if(paginatedMembers(); as paginatedResult){
+ <div class="flex floex-row items-center justify-between mx-15 my-8">
+    <span class="flex flex-row gap-3">
+      <button matButton="outlined" (click)="openDialog()" >Dodaj filtry</button>
+      <button matButton="outlined" (click)="resetFilters()">Resetuj filtry</button>
+    </span>
+    <span>
+    @if(paginatedResult.metadata; as metadata){
     <da-paginator
       [pageNumber]="metadata.currentPage"
       [totalCount]="metadata.totalCount"
@@ -10,8 +14,8 @@
       (pageChanged)="onPageChange($event)"
     />
   }
-
-
+  </span>
+ </div>
 
   @if(paginatedResult.items; as members){
   <div class="flex flex-col items-center lg:grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-6">

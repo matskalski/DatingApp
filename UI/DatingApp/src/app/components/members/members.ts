@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MembersList } from './members-list/members-list';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIcon } from '@angular/material/icon';
 import { MembersTails } from './members-tails/members-tails';
 

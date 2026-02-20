@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BuggyController : ControllerBase
+    //zawarte w BaseApiController
+    //[Route("api/[controller]")]
+    //[ApiController]
+    public class BuggyController : BaseApiController
     {
         [HttpGet("auth")]
         public IActionResult GetAuth()

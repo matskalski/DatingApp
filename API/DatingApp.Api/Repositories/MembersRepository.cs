@@ -31,11 +31,22 @@ namespace DatingApp.Api.Repositories
                 .FirstOrDefaultAsync(m => m.Id.Equals(id));
         }
 
-        public async Task<PaginatedResult<Member>> GetMembers(PagingParams pagingParams)
+        public async Task<PaginatedResult<Member>> GetMembers(MemberParams memberParams)
         {
             var query = _context.Members.AsQueryable();
 
-            return await PaginationHelper.CreateAsync(query, pagingParams.PageNumber, pagingParams.PageSize);            
+            query = query.Where(x => x.Id != memberParams.CurrentMemberId);
+
+            if(memberParams.Gender is not null){
+                query = query.Where(x => x.Gender == memberParams.Gender);
+            }
+
+            var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-memberParams.MaxAge -1));
+            var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-memberParams.MinAge));
+
+            query = query.Where(x => x.DateOfBirth >= minDob && x.DateOfBirth <= maxDob);
+
+            return await PaginationHelper.CreateAsync(query, memberParams.PageNumber, memberParams.PageSize);            
         }
 
         public Task<IReadOnlyList<Member>> GetAllMembers()

@@ -9,9 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Api.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AccountsController : ControllerBase
+    //zawarte w BaseAoiController
+    //[Route("api/[controller]")]
+    //[ApiController]
+    public class AccountsController : BaseApiController
     {
         private readonly AppDbContext _context;
         private readonly ITokensService _tokensService;

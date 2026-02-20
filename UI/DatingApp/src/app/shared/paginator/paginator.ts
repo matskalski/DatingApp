@@ -20,19 +20,6 @@ export class Paginator {
     return Math.min(this.pageNumber() * this.pageSize(), this.totalCount())
   })
 
-  // onPageChange(newPage?: number, pageSize?: EventTarget | null){
-  //   if(newPage) this.pageNumber.set(newPage);
-  //   if(pageSize) {
-  //     const size = Number((pageSize as HTMLSelectElement).value)
-  //     this.pageSize.set(size);
-  //   }
-
-  //   this.pageChanged.emit({
-  //     pageNumber: this.pageNumber(),
-  //     pageSize: this.pageSize()
-  //   })
-  // }
-
   onPageChange ($event: PageEvent){
     this.pageNumber.set($event.pageIndex + 1);
     this.pageSize.set($event.pageSize);
