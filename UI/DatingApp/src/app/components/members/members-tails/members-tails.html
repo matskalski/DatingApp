@@ -1,8 +1,11 @@
 @if(paginatedMembers(); as paginatedResult){
  <div class="flex floex-row items-center justify-between mx-15 my-8">
-    <span class="flex flex-row gap-3">
+    <span class="flex flex-row gap-3 items-center">
       <button matButton="outlined" (click)="openDialog()" >Dodaj filtry</button>
       <button matButton="outlined" (click)="resetFilters()">Resetuj filtry</button>
+      <div class="text-lg py-2 px-4 border-1 rounded-lg capitalize">
+        {{displayMessage}}
+      </div>
     </span>
     <span>
     @if(paginatedResult.metadata; as metadata){

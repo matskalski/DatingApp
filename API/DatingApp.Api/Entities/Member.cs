@@ -21,6 +21,12 @@ namespace DatingApp.Api.Entities
         public List<Photo> Photos { get; set; } = [];
 
         [JsonIgnore]
+        public List<MemberLike> LikedByMembers { get; set; } = new List<MemberLike>();
+
+        [JsonIgnore]
+        public List<MemberLike> LikedMembers { get; set; } = new List<MemberLike>();
+
+        [JsonIgnore]
         [ForeignKey(nameof(Id))]
         public AppUser User { get; set; } = null!;
 

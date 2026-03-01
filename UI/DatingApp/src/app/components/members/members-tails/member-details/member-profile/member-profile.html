@@ -6,7 +6,7 @@
   </div>
   <div class="flex gap-3">
     <span class="font-semibold ">Last active:</span>
-    <span>{{member.lastActive | date: 'dd MM yyyy'}} </span>
+    <span>{{member.lastActive | date: 'dd MM yyyy'}} ({{member.lastActive | timeAgo}}) </span>
   </div>
   @if(!membersService.editMode()){
   <h3 test-id="display-name" class="text-lg font-semibold text-violet-800">About {{member.displayName}}</h3>

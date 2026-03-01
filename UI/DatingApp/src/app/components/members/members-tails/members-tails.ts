@@ -1,3 +1,5 @@
+import { LocalStorageService } from './../../../services/localStorage/local-storage-service';
+import { filter } from 'rxjs';
 import { MemberParams } from './../../../models/member-params';
 import { PaginatedResult } from './../../../models/pagination-model';
 import { MembersService } from './../../../services/members/members-service';
@@ -20,17 +22,18 @@ import { MembersFilters } from './members-filter/members-filters';
   styleUrl: './members-tails.css'
 })
 export class MembersTails implements OnInit {
+  readonly dialog = inject(MatDialog);
+
   protected paginatedMembers = signal<PaginatedResult<MemberModel> | null>(null);
   protected memberParams = new MemberParams()
   private membersService = inject(MembersService);
-  readonly dialog = inject(MatDialog);
 
-  // private gender = signal('male')
-  // private minAge = signal(18)
-  // private maxAge = signal(100)
+  displayMessage: string = ''
 
   ngOnInit(): void {
+    // setTimeout(() => this.loadMembers(), 300)
     this.loadMembers();
+    this.setDisplayMessage()
   }
 
   openDialog(): void {
@@ -63,8 +66,9 @@ export class MembersTails implements OnInit {
           this.memberParams.maxAge = result.maxAge;
         }
 
-        this.memberParams.gender =result.gender;
+        this.memberParams.gender = result.gender;
         this.loadMembers();
+        this.setDisplayMessage();
       }
     });
   }
@@ -83,5 +87,27 @@ export class MembersTails implements OnInit {
   resetFilters() {
     this.memberParams = new MemberParams();
     this.loadMembers();
+  }
+
+  private setDisplayMessage() {
+    //konieczne do uniknięcia błędu NG0100
+    setTimeout(() => {
+      const defaultParams = new MemberParams();
+
+      const filters: string[] = [];
+
+      if (this.memberParams.gender) {
+        filters.push(this.memberParams.gender + 's');
+      }
+      else {
+        filters.push("Males & Females");
+      }
+
+      if (this.memberParams.minAge !== defaultParams.minAge || this.memberParams.maxAge !== defaultParams.maxAge) {
+        filters.push(` ages ${this.memberParams.minAge}-${this.memberParams.maxAge}`)
+      }
+
+      this.displayMessage = filter.length > 0 ? `selected: ${filters.join(' | ')}` : 'all members';
+    }, 0);
   }
 }

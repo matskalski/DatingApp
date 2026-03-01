@@ -1,3 +1,4 @@
+import { LocalStorageService } from './../localStorage/local-storage-service';
 import { PhotoModel } from './../../models/photo-model';
 import { UpdateMember } from './../../models/update-member.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -12,12 +13,15 @@ import { MemberParams } from '../../models/member-params';
   providedIn: 'root'
 })
 export class MembersService {
+  editMode = signal(false);
+  member = signal<MemberModel | null>(null);
+
   private httpClient: HttpClient = inject(HttpClient);
   private baseUrl = environment.apiUrl;
-  editMode = signal(false);
-  member = signal<MemberModel | null>(null)
+  private readonly localStorageService = inject(LocalStorageService);
 
-  getMembers(memberParams: MemberParams) : Observable<PaginatedResult<MemberModel>> {
+
+  getMembers(memberParams: MemberParams): Observable<PaginatedResult<MemberModel>> {
     let params = new HttpParams();
 
     params = params.append('pageNumber', memberParams.pageNumber);
@@ -25,45 +29,47 @@ export class MembersService {
     params = params.append('minAge', memberParams.minAge);
     params = params.append('maxAge', memberParams.maxAge);
 
-    if(memberParams.gender){
+    if (memberParams.gender) {
       params = params.append('gender', memberParams.gender)
     }
 
-    return this.httpClient.get<PaginatedResult<MemberModel>>(`${this.baseUrl}members`, {params: params});
+    console.log('aaa', memberParams)
+
+    return this.httpClient.get<PaginatedResult<MemberModel>>(`${this.baseUrl}members`, { params: params });
   };
 
-  getAllMembers() : Observable<MemberModel[]> {
+  getAllMembers(): Observable<MemberModel[]> {
     return this.httpClient.get<MemberModel[]>(`${this.baseUrl}members/getAllMembers`);
   };
 
-  getMember(id: string){
+  getMember(id: string) {
     return this.httpClient.get<MemberModel>(`${this.baseUrl}members/${id}`)
       .pipe(
         tap(mbr => this.member.set(mbr))
       )
-    ;
+      ;
   };
 
-  getMemberPhotos(id: string) : Observable<PhotoModel[]> {
+  getMemberPhotos(id: string): Observable<PhotoModel[]> {
     return this.httpClient.get<PhotoModel[]>(`${this.baseUrl}members/${id}/photos`);
   }
 
-  updateMember(updateMember: UpdateMember) : Observable<MemberModel> {
+  updateMember(updateMember: UpdateMember): Observable<MemberModel> {
     return this.httpClient.put<MemberModel>(`${this.baseUrl}members`, updateMember)
   }
 
-  uploadPhoto(file: File){
+  uploadPhoto(file: File) {
     const formData = new FormData();
     formData.append('file', file);
     console.log('aaa', formData)
     return this.httpClient.post<PhotoModel>(`${this.baseUrl}members/add-photo`, formData);
   }
 
-  setMainPhoto(photoId: number){
-    return this.httpClient.put(`${this.baseUrl}members/set-main-photo/${photoId}`,{})
+  setMainPhoto(photoId: number) {
+    return this.httpClient.put(`${this.baseUrl}members/set-main-photo/${photoId}`, {})
   }
 
-  deletePhoto(photoId: number){
+  deletePhoto(photoId: number) {
     return this.httpClient.delete(`${this.baseUrl}members/delete-photo/${photoId}`)
   }
 }

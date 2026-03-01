@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { UpdateMember } from '../../../../../models/update-member.model';
+import { TimeAgoPipe } from '../../../../../pipes/time-ago/time-ago-pipe';
 
 @Component({
   selector: 'da-member-profile',
@@ -18,7 +19,8 @@ import { UpdateMember } from '../../../../../models/update-member.model';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    TimeAgoPipe
   ],
   templateUrl: './member-profile.html',
   styleUrl: './member-profile.css'
