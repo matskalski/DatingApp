@@ -33,6 +33,7 @@ builder.Services.AddCors(setup =>
 builder.Services.AddScoped<ITokensService, TokensService>();
 builder.Services.AddScoped<IMembersRepository, MembersRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<ILikesRepository, LikesRepository>();
 
 builder.Services.AddScoped<LogUserActivity>();
 

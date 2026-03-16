@@ -89,8 +89,6 @@ export class MemberProfile implements OnInit, OnDestroy {
     )
 
     this.membersService.editMode.set(false);
-
-    console.log(this.membersService.editMode())
   };
 
   ngOnDestroy(): void {

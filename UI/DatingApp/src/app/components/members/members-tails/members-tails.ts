@@ -46,8 +46,6 @@ export class MembersTails implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-
       if (result !== undefined) {
         if (result.minAge < 18) {
           // this.minAge.set(18);

@@ -1,1 +1,13 @@
-<p>lists works!</p>
+<mat-tab-group class="mb-20" animationDuration="400ms" (selectedTabChange)="onSelectedTabChange($event)">
+  <mat-tab label="liked"></mat-tab>
+  <mat-tab label="likedBy"></mat-tab>
+  <mat-tab label="mutual"></mat-tab>
+</mat-tab-group>
+
+@if(members().length > 0){
+    <div class="flex flex-col items-center lg:grid lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-6">
+    @for(member of members(); track member.id ){
+      <da-member-tail [member]=member/>
+    }
+  </div>
+}

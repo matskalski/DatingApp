@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { LoginModel } from '../../models/login-model';
 import { UserModel } from '../../models/user-model';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, first, tap } from 'rxjs/operators';
 import { LocalStorageService } from '../localStorage/local-storage-service';
 import { RegisterModel } from '../../models/register-model';
 import { of } from 'rxjs';
 import { SnackbarService } from '../snackbar/snackbar-service';
 import { environment } from '../../../environments/environment';
+import { LikesService } from '../likes/likes-service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class AccountsService {
   currentUser = signal<UserModel | null>(null)
 
   private http = inject(HttpClient);
+  private likesService = inject(LikesService);
   private snackbarService = inject(SnackbarService)
   private localStorageService = inject(LocalStorageService);
   private baseUrl = environment.apiUrl;
@@ -37,12 +40,13 @@ export class AccountsService {
 
   logout() {
     this.localStorageService.removeItem('user')
-    this.currentUser.set(null)
+    this.currentUser.set(null);
+    this.likesService.clearLikeIds();
   }
 
   register(registerModel: RegisterModel) {
     return this.http.post<UserModel>(this.baseUrl + 'accounts/register', registerModel)
-    .pipe(
+      .pipe(
         tap(user => {
           if (user) {
             this.setCurrentUser(user);
@@ -53,6 +57,7 @@ export class AccountsService {
 
   setCurrentUser(user: UserModel) {
     this.localStorageService.setItem('user', user);
-    this.currentUser.set(user)
+    this.currentUser.set(user);
+    this.likesService.getLikeIds().pipe(first()).subscribe();
   }
 }

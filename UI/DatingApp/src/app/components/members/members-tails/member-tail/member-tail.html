@@ -2,12 +2,16 @@
 <mat-card routerLink="{{member.id}}" appearance="outlined"
   class="w-sm 2xl:w-92 m-auto cursor-pointer transition-all duration-300 ease-in-out transform hover:-translate-y-2">
   <img src="{{member.imageUrl}}" class="rounded-lg">
-  <div class="absolute bottom-0 w-full px-3 py-1 rounded-b-lg bg-gradient-to-t from-black via-black/75 to-black/0">
+
+  <div class="flex flex-row justify-between absolute bottom-0 w-full px-3 py-1 rounded-b-lg bg-gradient-to-t from-black via-black/75 to-black/0">
     <div class="flex flex-col text-white">
       <span class="font-semibold">{{member.displayName}} {{member.dateOfBirth | age}}</span>
       <span class="text-sm">{{member.city}}</span>
     </div>
-
+    <button (click)="toogleLike($event)" matMiniFab class="absolute top-0 right-0 z-40 bg-transparent! border-none!">
+       <mat-icon [ngClass]="{'text-amber-400!': hasLiked(), 'text-white!': !hasLiked()}">thumb_up</mat-icon>
+    </button>
   </div>
 </mat-card>
+
 }

@@ -33,8 +33,6 @@ export class MembersService {
       params = params.append('gender', memberParams.gender)
     }
 
-    console.log('aaa', memberParams)
-
     return this.httpClient.get<PaginatedResult<MemberModel>>(`${this.baseUrl}members`, { params: params });
   };
 
@@ -60,8 +58,6 @@ export class MembersService {
 
   uploadPhoto(file: File) {
     const formData = new FormData();
-    formData.append('file', file);
-    console.log('aaa', formData)
     return this.httpClient.post<PhotoModel>(`${this.baseUrl}members/add-photo`, formData);
   }
 
