@@ -30,6 +30,12 @@ namespace DatingApp.Api.Entities
         [ForeignKey(nameof(Id))]
         public AppUser User { get; set; } = null!;
 
+        [JsonIgnore]
+        public List<Message> MessagesSent { get; set; } = [];
+        [JsonIgnore]
+        public List<Message> MessagesReceived { get; set; } = [];
+
+
         public void Update(string displayName, string? description, string city, string country)
         {
             DisplayName = displayName;

@@ -1,0 +1,18 @@
+{{message()?.content}}
+
+<mat-card class="max-w-md flex flex-col gap-3 mx-auto mt-4" appearance="outlined">
+  <mat-card-header class="flex flex-row items-center gap-3">
+    <span [routerLink]="memberProfileUrl()" class="flex flex-row items-center gap-3 hover:cursor-pointer">
+      <img class="photo" [src]="message()?.senderImageUrl">
+      <div class="font-medium text-lg">{{message()?.senderDisplayName}}</div>
+    </span>
+    <div>{{message()?.messageSent | date: 'medium'}}</div>
+  </mat-card-header>
+  <mat-card-content>
+    <da-message-bubble [message]="message()?.content!" [type]="isOutgoing ? 'outgoing' : 'incoming'"></da-message-bubble>
+  </mat-card-content>
+  <mat-card-actions>
+    <button matButton>LIKE</button>
+    <button matButton>SHARE</button>
+  </mat-card-actions>
+</mat-card>

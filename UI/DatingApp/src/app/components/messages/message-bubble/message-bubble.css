@@ -4,6 +4,7 @@
   height: 200px;
   margin: 20px;
   width: 310px;
+  position: relative;
 }
 
 .bubble::after {
@@ -25,7 +26,7 @@
 }
 
 .bubble-outgoing {
-  background-color: #99d6ba;
+  background-color: #FFFFFF;
 }
 
 .bubble-incoming::after {
@@ -36,7 +37,13 @@
 }
 
 .bubble-outgoing::after {
-  background-color: #99d6ba;
+  background-color: #FFFFFF;
   box-shadow: 2px -2px 2px 0 rgba(178, 178, 178, .4);
   left: 300px;
+}
+
+p {
+  width: 300px;
+  word-wrap: break-word;
+  margin: 0;
 }

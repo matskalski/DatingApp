@@ -1,1 +1,8 @@
-<p>messages works!</p>
+<!-- <mat-tab-group>
+  <mat-tab label="Inbox"></mat-tab>
+  <mat-tab label="Outbox"></mat-tab>
+</mat-tab-group> -->
+
+@for(message of paginatedMessages()?.items; track message.id){
+  <da-message [message]="message" [memberProfileUrl]="'/members/'+(isInbox ? message.senderId : message.recipientId) +'/messages'"/>
+}
