@@ -1,0 +1,64 @@
+.message-bubble {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  padding: 12px 14px;
+}
+
+.message-content {
+  color: #1f1f1f;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.35;
+  max-height: calc(1.35em * 5);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+.message-bubble.send {
+  background-color: #ffffff;
+}
+
+.message-bubble.send::before {
+  content: '';
+  position: absolute;
+  top: 17px;
+  left: -13px;
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-right: 13px solid #d9d9d9;
+}
+
+.message-bubble.send::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: -11px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 12px solid #ffffff;
+}
+
+.message-bubble.answer {
+  background-color: #a8c7b1;
+}
+
+.message-bubble.answer::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: -11px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 11px solid #a8c7b1;
+}

@@ -3,12 +3,10 @@ import { MessageModel } from './../../../../../models/message-model';
 import { MembersService } from './../../../../../services/members/members-service';
 import { MessagesService } from './../../../../../services/messages/messages-service';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { MessageBubble } from '../../../../messages/message-bubble/message-bubble';
 
 @Component({
   selector: 'da-member-messages',
   imports: [
-    MessageBubble
   ],
   templateUrl: './member-messages.html',
   styleUrl: './member-messages.css'

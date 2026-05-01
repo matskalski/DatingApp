@@ -5,7 +5,7 @@ import { MessageModel } from '../../../models/message-model';
 import { RouterLink } from "@angular/router";
 import { DatePipe } from '@angular/common';
 import { AccountsService } from '../../../services/accounts/accounts-service';
-import { MessageBubble } from '../message-bubble/message-bubble';
+import { MessageTest } from "../../../shared/message-test/message-test";
 
 @Component({
   selector: 'da-message',
@@ -14,7 +14,7 @@ import { MessageBubble } from '../message-bubble/message-bubble';
     MatButtonModule,
     RouterLink,
     DatePipe,
-    MessageBubble
+    MessageTest
 ],
   templateUrl: './message.html',
   styleUrl: './message.css'
