@@ -8,5 +8,6 @@ export interface MessageModel {
   recipientImageUrl: string,
   content: string,
   dateRead?: string,
-  messageSent: string
+  messageSent: string,
+  currentUserSender: boolean
 }

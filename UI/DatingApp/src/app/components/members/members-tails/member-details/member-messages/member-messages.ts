@@ -3,11 +3,13 @@ import { MessageModel } from './../../../../../models/message-model';
 import { MembersService } from './../../../../../services/members/members-service';
 import { MessagesService } from './../../../../../services/messages/messages-service';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { MessageBubble } from "../../../../../shared/message-bubble/message-bubble";
 
 @Component({
   selector: 'da-member-messages',
   imports: [
-  ],
+    MessageBubble
+],
   templateUrl: './member-messages.html',
   styleUrl: './member-messages.css'
 })
@@ -30,7 +32,10 @@ export class MemberMessages implements OnInit {
       this.messagesService.getMessageThread(memberId)
         .pipe(
           takeUntilDestroyed(this.destroyRef))
-        .subscribe(messages => this.messages.set(messages));
+        .subscribe(messages => this.messages.set(messages.map(message => ({
+          ...message,
+          currentUserSender: message.senderId !== memberId
+        }))));
     }
   };
 }

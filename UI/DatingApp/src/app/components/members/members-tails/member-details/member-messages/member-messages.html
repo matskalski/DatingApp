@@ -1,5 +1,7 @@
-<div class="flex flex-col items-center">
-  @for(message of messages(); track message.id){
-  <!-- <da-message-bubble [message]="message.content" /> -->
-  }
+<div class="flex flex-col h-[70vh]">
+  <div class="flex flex-col gap-3 overflow-auto">
+    @for(message of messages(); track message.id){
+    <da-message-bubble [message]="message" [type]="!message.currentUserSender ? 'send' : 'answer'" />
+    }
+  </div>
 </div>

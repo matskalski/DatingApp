@@ -1,0 +1,30 @@
+<div>
+  <span class="flex flex-row items-center">
+    <img [src]="type() === 'send' ? message()?.senderImageUrl : message()?.recipientImageUrl" alt="Avatar"
+      class="w-9 h-9 rounded-full mb-1">
+    <div class="flex flex-col gap-1 max-w-100">
+      <div
+        class="message-bubble relative w-fit max-w-full rounded-[8px] border border-[#d9d9d9] px-[14px] py-3 shadow-[0_1px_3px_rgba(0,0,0,0.15)]"
+        [class.send]="type() === 'send'" 
+        [class.answer]="type() === 'answer'" 
+        [class.ml-5]="type() === 'send'"
+        [class.mr-5]="type() === 'answer'">
+        <div
+          class="text-[#1f1f1f] whitespace-pre-wrap break-words leading-[1.35] max-h-[calc(1.35em*5)] overflow-y-auto overflow-x-hidden pr-1">
+          {{ message()?.content }}
+        </div>
+      </div>
+      @if(message()?.currentUserSender && message()?.dateRead){
+      <p class="text-xs text-right text-gray-500">Seen {{ message()?.dateRead! | timeAgo }}</p>
+      }
+      @else if (message()?.currentUserSender && !message()?.dateRead)
+      {
+      <p class="text-xs text-right text-gray-500">Not reed yet</p>
+      }
+      @else {
+      <p class="text-xs text-right text-gray-500">Delivered</p>
+      }
+
+    </div>
+  </span>
+</div>
