@@ -1,7 +1,19 @@
-<div class="flex flex-col h-[70vh]">
+<div class="flex flex-col justify-between h-[70vh]">
   <div class="flex flex-col gap-3 overflow-auto">
     @for(message of messages(); track message.id){
     <da-message-bubble [message]="message" [type]="!message.currentUserSender ? 'send' : 'answer'" />
     }
   </div>
+  <form [formGroup]="form" class="flex flex-row justify-center items-center gap-2 w-full">
+    <mat-form-field class="w-6/7" appearance="outline">
+      <mat-label>Message</mat-label>
+      <!-- prevent default doane przed send message na zdarzeniu keydown.enter
+      aby zagwarantowac że wciśniecie enter spowoduje wysłanie wiadomości bez przechodzenia
+      do następnej linii w textarea -->
+      <textarea matInput class="h-12! resize-none!" formControlName="newMessageContent" placeholder="Enter your message"
+        (keydown.enter)="$event.preventDefault()" (keydown.enter)="sendMessage()">
+      </textarea>
+    </mat-form-field>
+    <button matButton="outlined" class="w-1/7" (click)="sendMessage()" type="submit">Send</button>
+  </form>
 </div>

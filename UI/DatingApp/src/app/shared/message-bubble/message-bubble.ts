@@ -7,7 +7,7 @@ export type MessageBubbleType = 'send' | 'answer';
 
 @Component({
   selector: 'da-message-bubble',
-  imports: [DatePipe, TimeAgoPipe],
+  imports: [TimeAgoPipe],
   templateUrl: './message-bubble.html',
   styleUrl: './message-bubble.css'
 })
