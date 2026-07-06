@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Roles for {{data.user}}</h2>
+<!-- pb-1 jest potrzebne aby zlikwidować dodawanie pionowego scrollbara nawet gdy lista mieści się w oknie -->
+<mat-dialog-content class="h-auto! pb-1! max-h-80!">
+    <span class="flex flex-col">
+        @for (role of data.roles; track $index) {
+        <mat-checkbox 
+            [checked]="role.userHasRole"
+            (change)="onCheckChanged(role.name,$event.checked)"
+        >{{role.name}}</mat-checkbox>
+        }
+    </span>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matButton (click)="onNoClick()">Cancel</button>
+    <button matButton cdkFocusInitial [mat-dialog-close]="result()">Ok</button>
+</mat-dialog-actions>

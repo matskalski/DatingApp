@@ -14,6 +14,7 @@
                 <a routerLink="/members" routerLinkActive="text-blue-700" [routerLinkActiveOptions]="{exact: true}">Matches</a>
                 <a routerLink="/lists" routerLinkActive="text-blue-700">Lists</a>
                 <a routerLink="/messages" routerLinkActive="text-blue-700">Messages</a>
+                <a appHasRole="['Admin, Moderator']" routerLink="/admin" routerLinkActive="text-blue-700">Admin</a>
                 }
             </nav>
 

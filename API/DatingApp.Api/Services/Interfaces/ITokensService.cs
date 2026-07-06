@@ -4,6 +4,7 @@ namespace DatingApp.Api.Services.Interfaces
 {
     public interface ITokensService
     {
-        string CreateToken(AppUser user);
+        Task<string> CreateToken(AppUser user);
+        string GenerateRefreshToken();
     }
 }

@@ -15,8 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     FormsModule,
     MatButtonModule,
-        MatDialogClose,
-        FormsModule
+    MatDialogClose,
+    FormsModule
   ],
   templateUrl: './members-filters.html',
   styleUrl: './members-filters.css'
@@ -24,18 +24,10 @@ import { MatSelectModule } from '@angular/material/select';
 export class MembersFilters {
   private fb = inject(FormBuilder);
   readonly dialogRef = inject(MatDialogRef<MembersFilters>);
-  readonly data = inject<{gender:string, minAge: number, maxAge: number}>(MAT_DIALOG_DATA);
-  readonly result = model(this.data)
-
-  // form: FormGroup = this.fb.group({
-  //   gender: [this.data.gender],
-  //   minAge: [this.data.minAge],
-  //   maxAge: [this.data.maxAge]
-  // });
+  readonly data = inject<{ gender: string, minAge: number, maxAge: number }>(MAT_DIALOG_DATA);
+  readonly result = model(this.data);
 
   close(): void {
     this.dialogRef.close();
-
-    // console.log('close', this.data, this.form)
   }
 }

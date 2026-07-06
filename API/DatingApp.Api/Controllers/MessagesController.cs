@@ -40,7 +40,7 @@ namespace DatingApp.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto messageDto)
         {
-              var sender = await _membersRepository.GetMemberById(User.GetMemberId());
+            var sender = await _membersRepository.GetMemberById(User.GetMemberId());
             var recipient = await _membersRepository.GetMemberById(messageDto.RecipientId);
 
             if (recipient is null || sender is null || sender.Id == messageDto.RecipientId)
@@ -59,5 +59,41 @@ namespace DatingApp.Api.Controllers
 
             return message.ToDto();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteMessage(string id)
+        {
+            var memberId = User.GetMemberId();
+
+            var message = await _messageRepository.GetMessage(id);
+
+            if(message is null)
+            {
+                return BadRequest("Cannot delete this message");
+            }
+
+            if(message.SenderId != memberId && message.RecipientId != memberId)
+            {
+                return BadRequest("You cannot delete this message");
+            }
+
+            if(message.SenderId == memberId)
+            {
+                message.DeteltedBySender = true;
+            }
+
+            if(message.RecipientId == memberId)
+            {
+                message.DeletedByRecipient = true;
+            }
+
+            if(message is { DeteltedBySender: true, DeletedByRecipient: true })
+            {
+                await _messageRepository.DeleteMeesage(message);               
+            }
+
+            return Ok();
+        }
+
     }
 }

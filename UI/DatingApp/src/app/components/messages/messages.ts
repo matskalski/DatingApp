@@ -7,14 +7,19 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'da-messages',
   imports: [
     MatTabsModule,
     MatTableModule,
-    DatePipe
-  ],
+    DatePipe,
+    
+    MatButtonModule,
+    MatIconModule,
+],
   templateUrl: './messages.html',
   styleUrl: './messages.css'
 })
@@ -23,7 +28,7 @@ export class Messages implements OnInit {
   protected pageNumber = 1;
   protected pageSize = 10;
   protected paginatedMessages = signal<PaginatedResult<MessageModel> | null>(null);
-  protected displayedColumns = ['sender', 'content', 'messageSent'];
+  protected displayedColumns = ['sender', 'content', 'messageSent', 'delete'];
 
   private messagesService = inject(MessagesService);
   private destroyRef = inject(DestroyRef);
@@ -50,8 +55,30 @@ export class Messages implements OnInit {
   };
 
   protected goToMessages(message: MessageModel) {
-    this.router.navigateByUrl(`members/${this.isInbox? message.senderId : message.recipientId}/messages`);
+    this.router.navigateByUrl(`members/${this.isInbox ? message.senderId : message.recipientId}/messages`);
   };
+
+  protected deleteMessage(event: Event, id: string) {
+    event.stopPropagation();
+    this.messagesService.deleteMessage(id)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(() => {
+        const currentMessages = this.paginatedMessages();
+        if (currentMessages) {
+          this.paginatedMessages.update(prev => {
+            if (!prev) return null;
+
+            const newItems = prev.items.filter(m => m.id !== id) || [];
+            return {
+              items: newItems,
+              metadata: prev.metadata
+            }
+          })
+        }
+      });
+  }
 
   private loadMessages() {
     this.messagesService.getMessages(this.container, this.pageNumber, this.pageSize)

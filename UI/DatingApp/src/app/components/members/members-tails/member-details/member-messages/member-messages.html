@@ -3,6 +3,7 @@
     @for(message of messages(); track message.id){
     <da-message-bubble [message]="message" [type]="!message.currentUserSender ? 'send' : 'answer'" />
     }
+    <div #messageEndRef></div>
   </div>
   <form [formGroup]="form" class="flex flex-row justify-center items-center gap-2 w-full">
     <mat-form-field class="w-6/7" appearance="outline">

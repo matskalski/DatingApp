@@ -15,6 +15,7 @@ import { LoginModel } from '../../models/login-model';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { tap } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HasRole } from '../../directives/has-role';
 
 @Component({
   selector: 'da-nav',
@@ -31,7 +32,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatMenuModule,
     RouterLink,
     RouterLinkActive,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    HasRole
   ],
   templateUrl: './nav.html',
   styleUrl: './nav.css'

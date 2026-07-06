@@ -1,4 +1,5 @@
 ﻿using DatingApp.Api.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.Api.Controllers
@@ -30,6 +31,13 @@ namespace DatingApp.Api.Controllers
         public IActionResult GetBadRequest()
         {
            return BadRequest("This was not a good request");
+        }
+
+        [HttpGet("admin-secret")]
+        [Authorize(Roles = "Admin")]
+        public ActionResult<string> GetSecretAdmin()
+        {
+            return Ok("Only admins should seen this");
         }
     }
 }

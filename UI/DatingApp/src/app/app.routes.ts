@@ -14,6 +14,8 @@ import { MemberPhotos } from './components/members/members-tails/member-details/
 import { MemberMessages } from './components/members/members-tails/member-details/member-messages/member-messages';
 import { membersResolver } from './resolvers/members/members-resolver';
 import { preventUnsavedChangesGuard } from './guards/prevent-unsaved-changes-guard';
+import { Admin } from './admin/admin';
+import { adminGuard } from './guards/admin-guard';
 
 
 export const routes: Routes = [
@@ -43,6 +45,7 @@ export const routes: Routes = [
       },
       { path: 'messages', component: Messages },
       { path: 'lists', component: Lists },
+      { path: 'admin', component: Admin, canActivate: [adminGuard] }
     ]
   },
   //pozostałe routingi

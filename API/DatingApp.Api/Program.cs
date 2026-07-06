@@ -1,4 +1,5 @@
 using DatingApp.Api.Data;
+using DatingApp.Api.Entities;
 using DatingApp.Api.Helpers;
 using DatingApp.Api.Middlewares;
 using DatingApp.Api.Repositories;
@@ -6,6 +7,7 @@ using DatingApp.Api.Repositories.Interfaces;
 using DatingApp.Api.Services;
 using DatingApp.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -23,11 +25,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddCors(setup =>
 {
     setup.AddDefaultPolicy(pol =>
-        pol.WithOrigins("http://localhost:4200", "https://localhost:4200")
-            .AllowAnyMethod()
-            .WithHeaders(["Content-Type", "Authorization"])
-            //.AllowAnyHeader()
-        );
+            pol.WithOrigins("http://localhost:4200", "https://localhost:4200")
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .WithHeaders(["Content-Type", "Authorization"])
+        //.AllowAnyHeader()
+    );
 });
 
 builder.Services.AddScoped<ITokensService, TokensService>();
@@ -42,6 +45,23 @@ builder.Services.AddScoped<ExceptionMiddleware>();
 
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 
+builder.Services.AddIdentityCore<AppUser>(opt =>
+    {
+        opt.Password.RequireDigit = false;
+        opt.Password.RequiredUniqueChars = 0;
+        
+         
+        opt.Password.RequireUppercase = false;
+        opt.Password.RequiredLength = 3;
+        
+        
+        opt.User.RequireUniqueEmail = true;
+        
+        opt.Password.RequireNonAlphanumeric = false;
+    })
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
     {
@@ -55,6 +75,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
         };
     });
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("RequiredAdminRole", policy => policy.RequireRole("Admin"))
+    .AddPolicy("ModeratePhotoRole", policy => policy.RequireRole(["Admin", "Moderator"]));
 
 builder.Services.AddOpenApi();
 
@@ -76,17 +100,18 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//to powinien byæ hosted service na starcie aplikacji
-using(var scope = app.Services.CreateScope())
+//to powinien byï¿½ hosted service na starcie aplikacji
+using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
     try
     {
         var context = services.GetRequiredService<AppDbContext>();
-        await context.Database.MigrateAsync();
+        var userManager = services.GetRequiredService<UserManager<AppUser>>();
 
-        await Seed.SeedData(context);
+        await context.Database.MigrateAsync();
+        await Seed.SeedData(userManager);
     }
     catch (Exception)
     {

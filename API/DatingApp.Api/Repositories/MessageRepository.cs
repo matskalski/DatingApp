@@ -42,8 +42,8 @@ namespace DatingApp.Api.Repositories
 
             query = messageParams.Container switch
             {
-                "Outbox" => query.Where(x => x.SenderId == messageParams.MemberId),
-                _ => query.Where(x => x.RecipientId == messageParams.MemberId)
+                "Outbox" => query.Where(x => x.SenderId == messageParams.MemberId && x.DeteltedBySender == false),
+                _ => query.Where(x => x.RecipientId == messageParams.MemberId && x.DeletedByRecipient == false)
             };
 
             var messageQuery = query.Select(MessageExtensions.ToDtoProjection());
@@ -57,7 +57,7 @@ namespace DatingApp.Api.Repositories
                 .ExecuteUpdateAsync(setters => setters.SetProperty(x => x.DateRead, DateTime.UtcNow));
 
             return await _dbContext.Messages
-                .Where(x => (x.RecipientId == currentMemberId && x.SenderId == recipientId) || (x.SenderId == currentMemberId && x.RecipientId == recipientId))
+                .Where(x => (x.RecipientId == currentMemberId && x.DeletedByRecipient == false && x.SenderId == recipientId) || (x.SenderId == currentMemberId && x.DeteltedBySender == false && x.RecipientId == recipientId))
                 .OrderBy(x => x.MessageSent)
                 .Select(MessageExtensions.ToDtoProjection())
                 .ToListAsync();
